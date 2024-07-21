@@ -5,6 +5,12 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodMeasuringStandUI", "FoodMeasuringStandUI.csproj", "{7982A281-E429-4C2C-BEDD-CB303985004B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodMeasuringAPI", "..\FoodMeasuringAPI\FoodMeasuringAPI.csproj", "{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodMeasuringObjects", "..\FoodMeasuringObjects\FoodMeasuringObjects.csproj", "{44DE923A-C156-490F-ADD6-90822EC4BB0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\Services\Services.csproj", "{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +23,18 @@ Global
 		{7982A281-E429-4C2C-BEDD-CB303985004B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7982A281-E429-4C2C-BEDD-CB303985004B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7982A281-E429-4C2C-BEDD-CB303985004B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44DE923A-C156-490F-ADD6-90822EC4BB0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44DE923A-C156-490F-ADD6-90822EC4BB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44DE923A-C156-490F-ADD6-90822EC4BB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44DE923A-C156-490F-ADD6-90822EC4BB0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
