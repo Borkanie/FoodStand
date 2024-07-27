@@ -5,6 +5,18 @@ namespace FoodMeasuringObjects.Orders
 {
     public class Item
     {
+        public Item()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Item(Food food, Location location)
+        {
+            Food = food;
+            Location.Add(location);
+            Id = Guid.NewGuid();
+        }
+
         public int Cost
         {
             get
@@ -34,6 +46,6 @@ namespace FoodMeasuringObjects.Orders
             return Food.Wheigth / Food.WheigthPerPortion;
         }
 
-        public Location Location { get; set; }
+        public List<Location> Location { get; set; } = new();
     }
 }

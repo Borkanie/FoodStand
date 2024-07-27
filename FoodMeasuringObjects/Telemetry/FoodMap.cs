@@ -15,6 +15,6 @@ namespace FoodMeasuringObjects.Telemetry
 
         public int ElementsOnColumn { get; set; } = 0;
 
-        List<Item> Items { get; set; } = new List<Item> { };
+        public List<Item> Items { get; set; } = new List<Item> { };
     }
 }
