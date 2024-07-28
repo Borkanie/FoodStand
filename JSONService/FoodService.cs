@@ -17,7 +17,6 @@ namespace JSONService
             Food food = new Food();
             food.Name = name;
             food.Description = description;
-            food.Wheigth = wheigth;
             food.Price = price;
             food.WheigthPerPortion = wheigthPerPortion;
             database.Add(food);
@@ -50,34 +49,6 @@ namespace JSONService
             return database.GetElements();
         }
 
-        /// <inheritdoc/>
-        public Dictionary<Food, int> GetFoodChanges()
-        {
-            var foods =  new Dictionary<Food, int>();
-            if(lastFoods == null)
-            {
-                lastFoods = database.GetElements();
-            }
-            else
-            {
-                var currentFoods = database.GetElements();
-                foreach(var food in currentFoods)
-                {
-                    foreach(var lastfood in lastFoods)
-                    {
-                        if(lastfood.Name == food.Name)
-                        {
-                            if(lastfood.Wheigth != food.Wheigth)
-                            {
-                                foods.Add(food, food.Wheigth - lastfood.Wheigth);
-                            }
-                            break;
-                        }
-                    }
-                }
-
-            }
-            return foods;
-        }
+        
     }
 }

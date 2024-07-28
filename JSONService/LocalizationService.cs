@@ -1,4 +1,6 @@
-﻿using FoodMeasuringObjects.Telemetry;
+﻿using FoodMeasuringObjects.Foods;
+using FoodMeasuringObjects.Orders;
+using FoodMeasuringObjects.Telemetry;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -18,13 +20,6 @@ namespace JSONService
             _foodService = foodService;
         }
 
-        private List<Location> GetUsedLocations()
-        {
-            var locations = new List<Location>();
-
-            return locations;
-        }
-
         public FoodMap GetFoodMap()
         {
             if(_foodMap is null)
@@ -34,21 +29,34 @@ namespace JSONService
 
         public void ResetFoodMap()
         {
-            FoodMapBuilder builder = FoodMapBuilder.Instance;
-            var locations = GetUsedLocations();
-            int index = 0;
+            Tuple<int, int> size = getMapSize();
+            _foodMap = new FoodMap(size.Item1,size.Item2);
             foreach (var food in _foodService.GetFoods())
             {
-                builder.AddFood(food, locations[index]);
-                index = (index + 1) % locations.Count;
-            }
-            _foodMap = builder.Finish();
+                var location = AskForLocation(food);
+                _foodMap.AddFood(food, location);
+            }            
+        }
 
+        public Location AskForLocation(Food food)
+        {
+
+            for(int i = 0; i < _foodMap.ElementsOnLine; i++)
+            {
+                for(int j=0;j< _foodMap.ElementsOnColumn; j++)
+                {
+                    if(_foodMap.Get(i,j) == null)
+                    {
+                        return new Location() { Line = i, Column = j };
+                    }
+                }
+            }
+            return null;
         }
 
         public bool Update(Location location)
         {
-            var oldItem = _foodMap.Items.First(x => x.Location.Contains(location));
+            var oldItem = _foodMap.Get(location);
             if(oldItem != null)
             {
                 oldItem.Location.Add(location);
@@ -56,6 +64,59 @@ namespace JSONService
 
             }
             return false;
+        }
+
+        private Tuple<int,int> getMapSize()
+        {
+            return new Tuple<int,int>(3, 4);
+        }
+
+        /// <summary>
+        /// This method will reset the current map and try to apply the same
+        /// foods based on the location in the recieved mapping.
+        /// </summary>
+        /// <param name="oldFoodMap">The current locaiton of the foods we want to preserve.</param>
+        private void RemapObject(FoodMap oldFoodMap)
+        {
+            ResetFoodMap();
+            if(_foodMap.ElementsOnLine != oldFoodMap.ElementsOnLine || _foodMap.ElementsOnColumn != oldFoodMap.ElementsOnColumn)
+            {
+                throw new InvalidOperationException("We cannot change the size of the map from this method");
+            }
+
+            for (int line = 0; line < _foodMap.ElementsOnLine; line++)
+            {
+                for (int column = 0; column < _foodMap.ElementsOnColumn; column++)
+                {
+                    var food = oldFoodMap.Get(line, column);
+                    if(food != null)
+                    {
+                        _foodMap.AddFood(food.Food, new Location() { Column = column, Line = line });
+                    }
+                }
+            }
+
+        }
+
+        /// <inheritdoc/>
+        public Dictionary<Item, int> GetFoodChanges()
+        {
+            var oldFoodMap = _foodMap; 
+            RemapObject(oldFoodMap);
+
+            var foods = new Dictionary<Item, int>();
+            
+            
+            foreach (var food in _foodMap.GetItemList())
+            {
+                var oldfood = oldFoodMap.Get(food.Location.First());
+
+                if(oldfood.Quantity - food.Quantity < 0)
+                {
+                    foods.Add(food, oldfood.Quantity - food.Quantity);
+                }
+            }
+            return foods;
         }
     }
 }
