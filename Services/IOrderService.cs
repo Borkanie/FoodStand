@@ -1,4 +1,5 @@
 ﻿using FoodMeasuringObjects.Orders;
+using System;
 
 namespace Services
 {
@@ -24,7 +25,7 @@ namespace Services
         /// Resets all the items in an order.
         /// </summary>
         /// <returns>Returns True if the order was succesfully removed from the database.</returns>
-        public bool ResetOrder(Order order);
+        public bool ResetOrder(Guid id);
 
         /// <summary>
         /// Removes all orders.
@@ -36,28 +37,20 @@ namespace Services
         /// Calculate total price for an order.
         /// </summary>
         /// <returns>Returns the total price for an order.</returns>
-        public int GetTotalCost(Order order);
+        public int GetTotalCost(Guid id);
 
         /// <summary>
         /// Closes a given order.
         /// </summary>
         /// <returns>True if it was succesfully closed.</returns>
-        public bool CloseOrder(Order order);
+        public Order? CloseOrder(Guid id);
 
         /// <summary>
         /// Adds an item to an order.
         /// </summary>
-        /// <param name="order"></param>
         /// <param name="item"></param>
         /// <returns>True if the order was succesfully modified.</returns>
-        public bool AddItem(Order order,Item item);
+        public bool AddItemToOrder(Guid orderId,Item item);
 
-        /// <summary>
-        /// Forcefully updates quantity for a given item.
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="newQuantity"></param>
-        /// <returns>True if it was succesfully modified.</returns>
-        public bool UpdateQuantity(Item item, int newQuantity);
     }
 }

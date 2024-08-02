@@ -3,42 +3,52 @@ using FoodMeasuringObjects.Orders;
 using FoodMeasuringObjects.Telemetry;
 using Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Unity;
+using Unity.Injection;
 
 namespace JSONService
 {
+    /// <inheritdoc/>
     internal class LocalizationService : ILocalizationService
     {
-
-        private IFoodService _foodService;
         private FoodMap _foodMap;
-        public LocalizationService(IFoodService foodService)
+        private UnityContainer _container;
+    
+        public LocalizationService(UnityContainer serviceContainer)
         {
-            _foodService = foodService;
+            _container = serviceContainer;
         }
 
-        public FoodMap GetFoodMap()
+        /// <summary>
+        /// Get's the food map after a reset.
+        /// </summary>
+        /// <returns></returns>
+        private FoodMap GetFoodMap()
         {
             if(_foodMap is null)
                 ResetFoodMap();
             return _foodMap;
         }
 
+        /// <inheritdoc/>
         public void ResetFoodMap()
         {
-            Tuple<int, int> size = getMapSize();
-            _foodMap = new FoodMap(size.Item1,size.Item2);
-            foreach (var food in _foodService.GetFoods())
+            _foodMap = _container.Resolve<ISensorReadingService>().getLatestReadings();
+             
+            foreach (var food in _container.Resolve<IFoodService>().GetFoods())
             {
                 var location = AskForLocation(food);
                 _foodMap.AddFood(food, location);
             }            
         }
 
-        public Location AskForLocation(Food food)
+        /// <inheritdoc/>
+        public Location? AskForLocation(Food food)
         {
 
             for(int i = 0; i < _foodMap.ElementsOnLine; i++)
@@ -54,6 +64,7 @@ namespace JSONService
             return null;
         }
 
+        /// <inheritdoc/>
         public bool Update(Location location)
         {
             var oldItem = _foodMap.Get(location);
@@ -66,17 +77,12 @@ namespace JSONService
             return false;
         }
 
-        private Tuple<int,int> getMapSize()
-        {
-            return new Tuple<int,int>(3, 4);
-        }
-
         /// <summary>
         /// This method will reset the current map and try to apply the same
         /// foods based on the location in the recieved mapping.
         /// </summary>
         /// <param name="oldFoodMap">The current locaiton of the foods we want to preserve.</param>
-        private void RemapObject(FoodMap oldFoodMap)
+        private void ReadNewQuantitiesAndReapplyMapping(FoodMap oldFoodMap)
         {
             ResetFoodMap();
             if(_foodMap.ElementsOnLine != oldFoodMap.ElementsOnLine || _foodMap.ElementsOnColumn != oldFoodMap.ElementsOnColumn)
@@ -102,7 +108,7 @@ namespace JSONService
         public Dictionary<Item, int> GetFoodChanges()
         {
             var oldFoodMap = _foodMap; 
-            RemapObject(oldFoodMap);
+            ReadNewQuantitiesAndReapplyMapping(oldFoodMap);
 
             var foods = new Dictionary<Item, int>();
             

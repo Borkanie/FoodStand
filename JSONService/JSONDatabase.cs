@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace JSONService
 {
     internal class JSONDatabase<T>
     {
-        private List<T> Values { get; } = new List<T>();
+        private List<T> Values { get; set; } = new List<T>();
 
         private string filepath;
 
@@ -39,31 +40,67 @@ namespace JSONService
             
         }
 
-        private void UpdateList()
+        private bool UpdateList()
         {
-            if(File.Exists(filepath))
+            try
             {
-                File.Delete(filepath);
+                if (File.Exists(filepath))
+                {
+                    File.Delete(filepath);
+                }
+                File.WriteAllText(filepath, JObject.FromObject(Values).ToString());
+
             }
-            File.WriteAllText(filepath, JObject.FromObject(Values).ToString());
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public void Add(T element)
+        public bool Add(T element)
         {
+            var _oldval = Values.ToArray();
             Values.Add(element);
-            UpdateList();
+            if (UpdateList())
+            {
+                return true;
+            }
+            else
+            {
+                Values = _oldval.ToList<T>();
+                return false;
+            }
         }
 
-        public void Remove(T element)
+        public bool Remove(T element)
         {
+            var _oldval = Values.ToArray();
             Values.Remove(element);
-            UpdateList();
+            if (UpdateList())
+            {
+                return true;
+            }
+            else
+            {
+                Values = _oldval.ToList<T>();
+                return false;
+            }
         }
 
-        public void Reset()
+        public bool Reset()
         {
+            var _oldval = Values.ToArray();
             Values.Clear();
-            UpdateList();
+            if (UpdateList())
+            {
+                return true;
+            }
+            else
+            {
+                Values = _oldval.ToList<T>();
+                return false;
+            }
         }
 
         /// <summary>
@@ -73,6 +110,11 @@ namespace JSONService
         public T[] GetElements()
         {
             return Values.ToArray();
+        }
+
+        public bool Contains(T element)
+        {
+            return Values.Contains(element);
         }
     }
 }

@@ -14,8 +14,9 @@ namespace Services
         /// <param name="description"></param>
         /// <param name="wheigthPerPortion"></param>
         /// <param name="price"></param>
-        /// <returns>The instance that has been registered in the database.</returns>
-        public Food RegisterFood(string name, string description = "", int wheigthPerPortion = 100, int price = 1);
+        /// <returns>The instance that has been registered in the database.
+        /// Null if it wasn't saved.</returns>
+        public Food? RegisterFood(string name, string description = "", int wheigthPerPortion = 100, int price = 1);
 
         /// <summary>
         /// Updates the values of the Food item.
@@ -29,7 +30,7 @@ namespace Services
         /// Resets the food list completely.
         /// Warning it will also clean up the database.
         /// </summary>
-        public void ResetFoods();
+        public bool ResetFoods();
 
         /// <summary>
         /// Removes a <see cref="Food"/> from the database.

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodMeasuringStandUI", "FoodMeasuringStandUI.csproj", "{7982A281-E429-4C2C-BEDD-CB303985004B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodMeasuringStandUI", "FoodMeasuringStandUI.csproj", "{7982A281-E429-4C2C-BEDD-CB303985004B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodMeasuringAPI", "..\FoodMeasuringAPI\FoodMeasuringAPI.csproj", "{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodMeasuringAPI", "..\FoodMeasuringAPI\FoodMeasuringAPI.csproj", "{0CA0FB71-E0C9-4144-AD9E-E731E827DAC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodMeasuringObjects", "..\FoodMeasuringObjects\FoodMeasuringObjects.csproj", "{44DE923A-C156-490F-ADD6-90822EC4BB0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodMeasuringObjects", "..\FoodMeasuringObjects\FoodMeasuringObjects.csproj", "{44DE923A-C156-490F-ADD6-90822EC4BB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\Services\Services.csproj", "{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "..\Services\Services.csproj", "{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONService", "..\JSONService\JSONService.csproj", "{E40D1CEA-3A05-49D7-803C-25DF8A1D92E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA2D640A-0E1B-4C15-B4EF-9D69F12229C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E40D1CEA-3A05-49D7-803C-25DF8A1D92E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E40D1CEA-3A05-49D7-803C-25DF8A1D92E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E40D1CEA-3A05-49D7-803C-25DF8A1D92E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E40D1CEA-3A05-49D7-803C-25DF8A1D92E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
