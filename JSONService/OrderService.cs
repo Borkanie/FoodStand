@@ -15,41 +15,48 @@ namespace JSONService
     internal class OrderService : IOrderService
     {
         UnityContainer _container;
-        JSONDatabase<Order> orders;
-        public OrderService(UnityContainer container,string path="orders.dbb")
+        JSONDatabase<Order> _confirmedOrders;
+        JSONDatabase<Order> _activeOrders;
+        public OrderService(UnityContainer container, string path = "_confirmedOrders.dbb")
         {
             _container = container;
-            orders = new JSONDatabase<Order>(path);
+            _confirmedOrders = new JSONDatabase<Order>(path);
+            _activeOrders = new JSONDatabase<Order>("orderCache.json");
         }
+
 
         /// <inheritdoc/>
         public bool AddItemToOrder(Guid id, Item item)
         {
-            var order = orders.GetElements().FirstOrDefault(x => x.Id == id);
+            var order = _activeOrders.GetElements().FirstOrDefault(x => x.Id == id);
             if (order == null)
             {
                 return false;
             }
             order.Items.Add(item);
-            return orders.Remove(order) && orders.Add(order);
+            return _activeOrders.Remove(order) && _confirmedOrders.Add(order);
         }
 
         /// <inheritdoc/>
         public Order? CloseOrder(Guid id)
         {
-            var order = orders.GetElements().FirstOrDefault(x => x.Id == id);
+            var order = _activeOrders.GetElements().FirstOrDefault(x => x.Id == id);
             if (order == null)
             {
                 return null;
             }
-            orders.Remove(order);
-            return order;
+            _activeOrders.Remove(order);
+            if (_activeOrders.Add(order))
+            {
+                return order;
+            }
+            return null;
         }
 
         /// <inheritdoc/>
         public int GetTotalCost(Guid id)
         {
-            var order = orders.GetElements().FirstOrDefault(x => x.Id == id);
+            var order = _activeOrders.GetElements().FirstOrDefault(x => x.Id == id);
             if (order == null)
             {
                 return -1;
@@ -61,26 +68,26 @@ namespace JSONService
         /// <inheritdoc/>
         public bool ResetAllOrders()
         {
-            return orders.Reset();
+            return _activeOrders.Reset();
         }
 
         /// <inheritdoc/>
         public bool ResetOrder(Guid id)
         {
-            var order = orders.GetElements().FirstOrDefault(x => x.Id == id);
+            var order = _activeOrders.GetElements().FirstOrDefault(x => x.Id == id);
             if (order == null)
             {
                 return true;
             }
 
-            return orders.Remove(order);
+            return _activeOrders.Remove(order);
         }
 
         /// <inheritdoc/>
         public Order? StartNewOrder()
         {
-            Order order = new Order();
-            if (orders.Add(order))
+            var order = new Order();
+            if (_activeOrders.Add(order))
             {
                 return order;
             }
@@ -90,7 +97,7 @@ namespace JSONService
         /// <inheritdoc/>
         public bool UpdateOrder(Order order)
         {
-            return orders.Remove(order) && orders.Add(order);
+            return _activeOrders.Remove(order) && _activeOrders.Add(order);
         }
 
     }
