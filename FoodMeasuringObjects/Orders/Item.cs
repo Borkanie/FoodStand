@@ -10,16 +10,9 @@ namespace FoodMeasuringObjects.Orders
             Id = Guid.NewGuid();
         }
 
-        public Item(ICollection<Location> locations)
-        {
-            Id = Guid.NewGuid();
-            Location.AddRange(locations);
-        }
-
-        public Item(Food food, ICollection<Location> locations)
+        public Item(Food food)
         {
             Food = food;
-            Location.AddRange(locations);
             Id = Guid.NewGuid();
         }
 
@@ -51,7 +44,5 @@ namespace FoodMeasuringObjects.Orders
         {
             return Quantity / Food.WheigthPerPortion;
         }
-
-        public List<Location> Location { get; set; } = new();
     }
 }

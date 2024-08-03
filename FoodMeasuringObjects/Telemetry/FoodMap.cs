@@ -5,62 +5,36 @@ namespace FoodMeasuringObjects.Telemetry
 {
     public class FoodMap
     {
+        private Item[,] itemTable { get; set; } 
+        
         public FoodMap(int numberOfLines, int numberOfColumns)
         {
-            for(int i = 0; i < numberOfLines; i++)
-            {
-                ItemTable.Add(new List<Item>());
-                for(int j=0;j< numberOfColumns; j++)
-                {
-                    Location currentLocation = new Location() { Column = j, Line = i };
-                    ItemTable[i].Add(new Item(new List<Location>() { currentLocation }));
-                }
-            }    
+            itemTable = new Item[numberOfLines, numberOfColumns];    
         }
 
         public Item? Get(int line, int column)
         {
-            if (line > ElementsOnLine || column > ElementsOnColumn)
+            if (itemTable == null || line > ElementsOnLine || column > ElementsOnColumn)
                 return null;
-            var searchLocation = new Location()
-            {
-                Column = column,
-                Line = line
-            };
-            foreach(var itemLine in ItemTable)
-            {
-                foreach(var item in itemLine)
-                {
-                    if (item.Location.Contains(searchLocation))
-                        return item;
-                }
-            }
-            return null;
+            
+            return itemTable[line,column];
         }
 
         public Item? Get(Location location)
         {
-            if (location.Line > ElementsOnLine || location.Column > ElementsOnColumn)
+            if (itemTable == null || location.Line > ElementsOnLine 
+                || location.Column > ElementsOnColumn)
                 return null;
             
-            foreach (var itemLine in ItemTable)
-            {
-                foreach (var item in itemLine)
-                {
-                    if (item.Location.Contains(location))
-                        return item;
-                }
-            }
-            return null;
+            return itemTable[location.Line,location.Column];
         }
 
-        public List<List<Item>> ItemTable { get; set; } = new();
 
         public int ElementsOnLine 
         { 
             get {
-                if(ItemTable.Count > 0)
-                    return ItemTable[0].Count;
+                if(itemTable.Length > 0)
+                    return itemTable.GetLength(1);
                 return 0;
             } 
         }
@@ -69,36 +43,40 @@ namespace FoodMeasuringObjects.Telemetry
         {
             get
             {
-                return ItemTable.Count;
+                return itemTable.GetLength(0);
             }    
         }
 
         public void AddFood(Food food, Location targetLocation)
         {
             var targetItem = Get(targetLocation);
-            if (targetItem != null)
-            {
-                throw new InvalidOperationException("Location is already in use");
-            }
             targetItem.Food = food;
-            targetItem.Location.Add(targetLocation);
         }
 
         public List<Item> GetItemList()
         {
             var list = new List<Item>();
 
-
-            foreach (var itemLine in ItemTable)
+            foreach (var item in itemTable)
             {
-                foreach (var item in itemLine)
-                {
-                    if (!list.Contains(item))
-                        list.Add(item);
-                       
-                }
+                list.Add(item);
             }
             return list;
+        }
+
+        public void SetItem(Item item, Location location)
+        {
+            if (LocationIsCorrect(location))
+            {
+                itemTable[location.Line, location.Column] = item;
+            }
+        }
+
+        private bool LocationIsCorrect(Location location)
+        {
+            if(ElementsOnLine == 0) 
+                return false;
+            return location.Line < ElementsOnLine && location.Column < ElementsOnColumn;
         }
     }
 }
