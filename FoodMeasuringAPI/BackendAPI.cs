@@ -1,4 +1,6 @@
-﻿using FoodMeasuringObjects.Orders;
+﻿using FoodMeasuringObjects.Foods;
+using FoodMeasuringObjects.Orders;
+using FoodMeasuringObjects.Telemetry;
 using JSONService;
 using Services;
 using System;
@@ -73,6 +75,27 @@ namespace FoodMeasuringAPI
         }
         #endregion
 
+        #region ILocalizationService
+
+        /// <inheritdoc cref="ILocalizationService.ResetFoodMap()"/>
+        public static void ResetFoodMap()
+        {
+            instance._container.Resolve<ILocalizationService>().ResetFoodMap();
+        }
+
+        /// <inheritdoc cref="ILocalizationService.AskForLocation(Food)"/>
+        public static Location? AskForLocation(Food food)
+        {
+            return instance._container.Resolve<ILocalizationService>().AskForLocation(food);
+        }
+
+        /// <inheritdoc cref="ILocalizationService.GetFoodChanges()"/>
+        public static Dictionary<Item,int> GetFoodChanges()
+        {
+            return instance._container.Resolve<ILocalizationService>().GetFoodChanges();
+        }
+
+        #endregion
 
     }
 }
