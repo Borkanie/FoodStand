@@ -12,7 +12,7 @@ using Unity;
 namespace JSONService
 {
     /// <inheritdoc/>
-    internal class SensorMockingService : ISensorReadingService
+    public class SensorMockingService : ISensorReadingService
     {
         private FoodMap MakeReading()
         {

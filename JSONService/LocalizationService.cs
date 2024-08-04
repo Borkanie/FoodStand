@@ -14,7 +14,7 @@ using Unity.Injection;
 namespace JSONService
 {
     /// <inheritdoc/>
-    internal class LocalizationService : ILocalizationService
+    public class LocalizationService : ILocalizationService
     {
         private FoodMap _foodMap;
         private UnityContainer _container;

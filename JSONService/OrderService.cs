@@ -9,10 +9,7 @@ using Unity;
 
 namespace JSONService
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    internal class OrderService : IOrderService
+    public class OrderService : IOrderService
     {
         UnityContainer _container;
         JSONDatabase<Order> _confirmedOrders;
