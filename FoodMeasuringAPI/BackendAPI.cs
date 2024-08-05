@@ -5,9 +5,12 @@ using JSONService;
 using Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Unity;
 using Unity.Injection;
 
@@ -25,7 +28,6 @@ namespace FoodMeasuringAPI
             _container.RegisterSingleton<ISensorReadingService, SensorMockingService>(injection);
             _container.RegisterSingleton<ILocalizationService, LocalizationService>(injection);
             _container.RegisterSingleton<IOrderService, OrderService>(injection);
-            
         }
 
         #region IOrderService
@@ -95,6 +97,39 @@ namespace FoodMeasuringAPI
             return instance._container.Resolve<ILocalizationService>().GetFoodChanges();
         }
 
+        #endregion
+
+        #region IFoodService
+
+        /// <inheritdoc cref="IFoodService.GetFoods()"/>
+        public static Food[] GetFoods()
+        {
+            return instance._container.Resolve<IFoodService>().GetFoods();
+        }
+
+        /// <inheritdoc cref="IFoodService.ResetFoods()"/>
+        public static bool ResetFoods()
+        {
+            return instance._container.Resolve<IFoodService>().ResetFoods();
+        }
+
+        /// <inheritdoc cref="IFoodService.RegisterFood(string, string, int, int)"/>
+        public static Food? RegisterFood(string name, string description = "", int wheigthPerPortion = 100, int price = 1)
+        {
+            return instance._container.Resolve<IFoodService>().RegisterFood(name, description, wheigthPerPortion, price);
+        }
+
+        /// <inheritdoc cref="IFoodService.Update(Food)"/>
+        public static bool Update(Food newFoodValue)
+        {
+            return instance._container.Resolve<IFoodService>().Update(newFoodValue);
+        }
+
+        /// <inheritdoc cref="IFoodService.DeleteFood(Food)"/>
+        public static bool DeleteFood(Food foodToDelete)
+        {
+            return instance._container.Resolve<IFoodService>().DeleteFood(foodToDelete);
+        }
         #endregion
 
     }
