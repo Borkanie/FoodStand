@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FoodStandUI.ViewModel.Components
 {
-    internal class FoodViewModel :  BasicViewModel
+    internal class FoodViewModel :  BaseViewModel
     {
         Food model;
 

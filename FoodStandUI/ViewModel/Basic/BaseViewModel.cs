@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FoodStandUI.ViewModel.Basic
 {
-    internal class BasicViewModel : INotifyPropertyChanged
+    internal class BaseViewModel : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
