@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FoodStandUI.View.Components.ItemView">
+             x:Class="FoodStandUI.View.Components.ItemView"
+             xmlns:local="clr-namespace:FoodStandUI.ViewModel.Components"
+             xmlns:ui="clr-namespace:FoodStandUI.View.Components">
+    <ContentView.BindingContext>
+        <local:ItemViewModel/>
+    </ContentView.BindingContext>
+    
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <ui:FoodView BindingContext="{Binding Food}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <VerticalStackLayout>
+                <Editor Text="{Binding Type}" Grid.Row="0"></Editor>
+                <Label Text="{Binding Quantity}" Grid.Row="1"></Label>
+                <Label Text="{Binding Cost,Mode=OneWay}" Grid.Row="2"></Label>
+            </VerticalStackLayout>
+        </Grid>
+
     </VerticalStackLayout>
 </ContentView>

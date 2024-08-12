@@ -23,6 +23,19 @@ namespace FoodStandUI.ViewModel.Components
             this.model = model;
         }
 
+        public Item Model
+        {
+            get => model;
+            set
+            {
+                if(model != value)
+                {
+                    model = value;
+                    RaisePropertyChanged(nameof(Model));
+                }
+            }
+        }
+
         public int Cost
         {
             get
