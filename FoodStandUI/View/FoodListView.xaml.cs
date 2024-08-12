@@ -1,3 +1,6 @@
+using FoodMeasuringObjects.Foods;
+using FoodStandUI.ViewModel.Components;
+
 namespace FoodStandUI.View;
 
 public partial class FoodListView : ContentView
@@ -6,4 +9,7 @@ public partial class FoodListView : ContentView
 	{
 		InitializeComponent();
 	}
+
+	internal FoodViewModel ViewModel { get; set; }
+
 }

@@ -62,5 +62,6 @@ namespace FoodStandUI.ViewModel.Components
         {
             model.SetItem(item, location);
         }
+
     }
 }
