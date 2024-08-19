@@ -24,11 +24,8 @@ namespace JSONService
             _container = serviceContainer;
         }
 
-        /// <summary>
-        /// Get's the food map after a reset.
-        /// </summary>
-        /// <returns></returns>
-        private FoodMap GetFoodMap()
+        /// <inheritdoc/>
+        public FoodMap GetFoodMap()
         {
             if(_foodMap is null)
                 ResetFoodMap();

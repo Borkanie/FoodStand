@@ -67,4 +67,37 @@
 	  <ProjectReference Include="..\FoodMeasuringObjects\FoodMeasuringObjects.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="View\Components\FoodListitemView.xaml.cs">
+	    <DependentUpon>FoodListitemView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\FoodListitemView.xaml.cs">
+	    <DependentUpon>FoodListitemView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\OrderManagementView.xaml.cs">
+	    <DependentUpon>OrderManagementView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\Components\FoodListitemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Components\ItemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Components\OrderView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\FoodListitemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\FoodMapView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\OrderManagementView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

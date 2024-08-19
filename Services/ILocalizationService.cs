@@ -28,5 +28,11 @@ namespace Services
         /// </summary>
         /// <returns>A dicitonary of all the foods and the change in mass.</returns>
         public Dictionary<Item, int> GetFoodChanges();
+
+        /// <summary>
+        /// Return the current populated <see cref="FoodMap"/>
+        /// </summary>
+        /// <returns></returns>
+        public FoodMap GetFoodMap();
     }
 }

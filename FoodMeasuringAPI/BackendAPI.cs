@@ -20,6 +20,7 @@ namespace FoodMeasuringAPI
     {
         private UnityContainer _container;
         private static BackendAPI instance;
+        
         private BackendAPI() 
         {
             _container = new UnityContainer();
@@ -30,71 +31,90 @@ namespace FoodMeasuringAPI
             _container.RegisterSingleton<IOrderService, OrderService>(injection);
         }
 
+        public static BackendAPI Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new BackendAPI();
+                }
+                return instance;
+            }
+        }
+
         #region IOrderService
         /// <inheritdoc cref="IOrderService.StartNewOrder()"/>
-        public static Order StartNewOrder()
+        public Order StartNewOrder()
         {
-            return instance._container.Resolve<IOrderService>().StartNewOrder();
+            return _container.Resolve<IOrderService>().StartNewOrder();
         }
 
 
         /// <inheritdoc cref="IOrderService.UpdateOrder(Order)"/>
-        public static bool UpdateOrder(Order order)
+        public bool UpdateOrder(Order order)
         {
-            return instance._container.Resolve<IOrderService>().UpdateOrder(order);
+            return _container.Resolve<IOrderService>().UpdateOrder(order);
         }
 
 
         /// <inheritdoc cref="IOrderService.ResetOrder(Guid)"/>
-        public static bool ResetOrder(Guid id)
+        public bool ResetOrder(Guid id)
         {
-            return instance._container.Resolve<IOrderService>().ResetOrder(id);
+            return _container.Resolve<IOrderService>().ResetOrder(id);
         }
 
 
         /// <inheritdoc cref="IOrderService.ResetAllOrders()"/>
-        public static bool ResetAllOrders()
+        public bool ResetAllOrders()
         {
-            return instance._container.Resolve<IOrderService>().ResetAllOrders();
+            return _container.Resolve<IOrderService>().ResetAllOrders();
         }
 
         /// <inheritdoc cref="IOrderService.GetTotalCost(Guid)"/>
-        public static int GetTotalCost(Guid id)
+        public int GetTotalCost(Guid id)
         {
-            return instance._container.Resolve<IOrderService>().GetTotalCost(id);
+            return _container.Resolve<IOrderService>().GetTotalCost(id);
         }
 
         /// <inheritdoc cref="IOrderService.CloseOrder(Guid)"/>
-        public static Order? CloseOrder(Guid id)
+        public Order? CloseOrder(Guid id)
         {
-            return instance._container.Resolve<IOrderService>().CloseOrder(id);
+            return _container.Resolve<IOrderService>().CloseOrder(id);
         }
 
         /// <inheritdoc cref="IOrderService.AddItemToOrder"/>
-        public static bool AddItemToOrder(Guid orderId, Item item)
+        public bool AddItemToOrder(Guid orderId, Item item)
         {
-            return instance._container.Resolve<IOrderService>().AddItemToOrder(orderId, item);
+            return _container.Resolve<IOrderService>().AddItemToOrder(orderId, item);
         }
         #endregion
 
         #region ILocalizationService
 
         /// <inheritdoc cref="ILocalizationService.ResetFoodMap()"/>
-        public static void ResetFoodMap()
+        public void ResetFoodMap()
         {
-            instance._container.Resolve<ILocalizationService>().ResetFoodMap();
+            _container.Resolve<ILocalizationService>().ResetFoodMap();
         }
 
         /// <inheritdoc cref="ILocalizationService.AskForLocation(Food)"/>
-        public static Location? AskForLocation(Food food)
+        public Location? AskForLocation(Food food)
         {
-            return instance._container.Resolve<ILocalizationService>().AskForLocation(food);
+            return _container.Resolve<ILocalizationService>().AskForLocation(food);
         }
 
         /// <inheritdoc cref="ILocalizationService.GetFoodChanges()"/>
-        public static Dictionary<Item,int> GetFoodChanges()
+        public Dictionary<Item,int> GetFoodChanges()
         {
-            return instance._container.Resolve<ILocalizationService>().GetFoodChanges();
+            return _container.Resolve<ILocalizationService>().GetFoodChanges();
+        }
+
+
+        /// <inheritdoc cref="ILocalizationService.GetFoodMap"/>
+        public FoodMap GetFoodMap()
+        {
+            return _container.Resolve<ILocalizationService>().GetFoodMap();
         }
 
         #endregion
@@ -102,34 +122,35 @@ namespace FoodMeasuringAPI
         #region IFoodService
 
         /// <inheritdoc cref="IFoodService.GetFoods()"/>
-        public static Food[] GetFoods()
+        public Food[] GetFoods()
         {
-            return instance._container.Resolve<IFoodService>().GetFoods();
+            return _container.Resolve<IFoodService>().GetFoods();
         }
 
         /// <inheritdoc cref="IFoodService.ResetFoods()"/>
-        public static bool ResetFoods()
+        public bool ResetFoods()
         {
-            return instance._container.Resolve<IFoodService>().ResetFoods();
+            return _container.Resolve<IFoodService>().ResetFoods();
         }
 
         /// <inheritdoc cref="IFoodService.RegisterFood(string, string, int, int)"/>
-        public static Food? RegisterFood(string name, string description = "", int wheigthPerPortion = 100, int price = 1)
+        public Food? RegisterFood(string name, string description = "", int wheigthPerPortion = 100, int price = 1)
         {
-            return instance._container.Resolve<IFoodService>().RegisterFood(name, description, wheigthPerPortion, price);
+            return _container.Resolve<IFoodService>().RegisterFood(name, description, wheigthPerPortion, price);
         }
 
         /// <inheritdoc cref="IFoodService.Update(Food)"/>
-        public static bool Update(Food newFoodValue)
+        public bool Update(Food newFoodValue)
         {
-            return instance._container.Resolve<IFoodService>().Update(newFoodValue);
+            return _container.Resolve<IFoodService>().Update(newFoodValue);
         }
 
         /// <inheritdoc cref="IFoodService.DeleteFood(Food)"/>
-        public static bool DeleteFood(Food foodToDelete)
+        public bool DeleteFood(Food foodToDelete)
         {
-            return instance._container.Resolve<IFoodService>().DeleteFood(foodToDelete);
+            return _container.Resolve<IFoodService>().DeleteFood(foodToDelete);
         }
+
         #endregion
 
     }

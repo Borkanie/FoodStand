@@ -1,4 +1,7 @@
-﻿namespace FoodStandUI
+﻿using FoodMeasuringAPI;
+using FoodStandUI.ViewModel.Components;
+
+namespace FoodStandUI
 {
     public partial class MainPage : ContentPage
     {
@@ -7,6 +10,7 @@
         public MainPage()
         {
             InitializeComponent();
+            FoodMap = new FoodMapViewModel(BackendAPI.Instance.GetFoodMap());
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
@@ -19,6 +23,13 @@
                 CounterBtn.Text = $"Clicked {count} times";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
+        }
+
+
+        internal FoodMapViewModel FoodMap
+        {
+            get;
+            set;
         }
     }
 

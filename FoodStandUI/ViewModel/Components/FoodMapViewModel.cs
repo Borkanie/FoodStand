@@ -42,12 +42,16 @@ namespace FoodStandUI.ViewModel.Components
 
         public FoodMapViewModel(FoodMap model)
         {
-            Model = model;            
+            this.model = model;            
         }
 
         public ItemViewModel Get(int line, int column)
         {
-            return new ItemViewModel(model.Get(line, column));
+            var item = model.Get(line, column);
+            if(item == null)
+                return new ItemViewModel();
+            else
+                return new ItemViewModel(item);
         }
 
         public ItemViewModel Get(FoodMeasuringObjects.Telemetry.Location location)
