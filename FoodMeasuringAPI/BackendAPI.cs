@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Unity;
 using Unity.Injection;
+using Unity.Lifetime;
 
 namespace FoodMeasuringAPI
 {
@@ -24,11 +25,37 @@ namespace FoodMeasuringAPI
         private BackendAPI() 
         {
             _container = new UnityContainer();
-            var injection = new InjectionConstructor(_container);
-            _container.RegisterSingleton<IFoodService, FoodService>(injection);
-            _container.RegisterSingleton<ISensorReadingService, SensorMockingService>(injection);
-            _container.RegisterSingleton<ILocalizationService, LocalizationService>(injection);
-            _container.RegisterSingleton<IOrderService, OrderService>(injection);
+            _container.RegisterType<ISensorReadingService, SensorMockingService>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ILocalizationService, LocalizationService>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(_container));
+            _container.RegisterType<IFoodService, FoodService>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(new object[] { _container, "food.json"}));
+            _container.RegisterType<IOrderService, OrderService>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(new object[] {_container, "confirmedOrders.json" })); 
+        }
+
+        public UnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+        }
+
+        public static BackendAPI Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new BackendAPI();
+                }
+                return instance;
+            }
         }
 
         public static BackendAPI Instance
@@ -50,20 +77,17 @@ namespace FoodMeasuringAPI
             return _container.Resolve<IOrderService>().StartNewOrder();
         }
 
-
         /// <inheritdoc cref="IOrderService.UpdateOrder(Order)"/>
         public bool UpdateOrder(Order order)
         {
             return _container.Resolve<IOrderService>().UpdateOrder(order);
         }
 
-
         /// <inheritdoc cref="IOrderService.ResetOrder(Guid)"/>
         public bool ResetOrder(Guid id)
         {
             return _container.Resolve<IOrderService>().ResetOrder(id);
         }
-
 
         /// <inheritdoc cref="IOrderService.ResetAllOrders()"/>
         public bool ResetAllOrders()
@@ -99,13 +123,13 @@ namespace FoodMeasuringAPI
         }
 
         /// <inheritdoc cref="ILocalizationService.AskForLocation(Food)"/>
-        public Location? AskForLocation(Food food)
+        public List<Location> AskForLocation(Food food)
         {
             return _container.Resolve<ILocalizationService>().AskForLocation(food);
         }
 
         /// <inheritdoc cref="ILocalizationService.GetFoodChanges()"/>
-        public Dictionary<Item,int> GetFoodChanges()
+        public Dictionary<Contianer,int> GetFoodChanges()
         {
             return _container.Resolve<ILocalizationService>().GetFoodChanges();
         }

@@ -7,9 +7,19 @@ namespace JSONService
     /// <inheritdoc/>
     public class FoodService : IFoodService
     {
+        private Food Clone(Food clone)
+        {
+            return new Food()
+            {
+                Name = clone.Name,
+                Description = clone.Description,
+                WheigthPerPortion = clone.WheigthPerPortion,
+                Price = clone.Price,
+            };
+        }
         JSONDatabase<Food> database;
         UnityContainer _container;
-        public FoodService(string JSONpath,UnityContainer container)
+        public FoodService(UnityContainer container, string JSONpath = "food.json")
         {
             _container = container;
             database = new JSONDatabase<Food>(JSONpath);
@@ -23,8 +33,12 @@ namespace JSONService
             food.Description = description;
             food.Price = price;
             food.WheigthPerPortion = wheigthPerPortion;
+            if (database.GetElements().Contains(food))
+            {
+                return null;
+            }
             if(database.Add(food))
-                return food;
+                return Clone(food);
             return null;
         }
 
@@ -58,6 +72,12 @@ namespace JSONService
         public bool DeleteFood(Food foodToDelete)
         {
             return database.Remove(foodToDelete);
+        }
+
+        /// <inheritdoc/>
+        public Food? Get(string name)
+        {
+            return database.GetElements().FirstOrDefault(x => x.Name == name);
         }
     }
 }

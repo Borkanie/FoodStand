@@ -1,48 +1,54 @@
 ﻿using FoodMeasuringObjects.Foods;
-using FoodMeasuringObjects.Telemetry;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodMeasuringObjects.Orders
 {
     public class Item
     {
-        public Item()
-        {
-            Id = Guid.NewGuid();
-        }
-
         public Item(Food food)
         {
             Food = food;
-            Id = Guid.NewGuid();
         }
+
+        public Food Food { get; set; } 
 
         public int Cost
         {
             get
             {
+                if (Food is null)
+                    return 0;
                 return Food.Price * Quantity;
             }
         }
 
-        public Guid Id { get; set; }
+        public int Quantity { get; set; } = 0;
 
-        public Food Food { get; set; }
-
-        private int _quantity = 0;
-        public int Quantity
+        public override bool Equals(object? obj)
         {
-            get { return _quantity; }
-            set
+            if (obj is not Item || obj == null)
             {
-                _quantity += value / Food.WheigthPerPortion;
+                return false;
             }
+            Item item = (Item)obj;
+            if (item.Food is not null)
+                return Food is not null && item.Food! == Food!;
+            else
+                return Food is null;
         }
 
-        public FoodPortioningType Type { get; set; }
-
-        public int AvailableQuantity()
+        public static bool operator ==(Item left, Item right)
         {
-            return Quantity / Food.WheigthPerPortion;
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Item left, Item right)
+        {
+            return !left.Equals(right);
         }
     }
 }

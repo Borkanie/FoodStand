@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "..\Services\Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSONService", "..\JSONService\JSONService.csproj", "{E40D1CEA-3A05-49D7-803C-25DF8A1D92E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodStandUI", "..\FoodStandUI\FoodStandUI.csproj", "{CC5D8C93-D380-44A4-850B-BDF78761F8F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodStandUI", "..\FoodStandUI\FoodStandUI.csproj", "{CC5D8C93-D380-44A4-850B-BDF78761F8F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{B63972D4-A441-4336-8FF5-FDC3ACDD4E99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceUnitTests", "JSONServiceUnitTests\ServiceUnitTests.csproj", "{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,9 +45,16 @@ Global
 		{CC5D8C93-D380-44A4-850B-BDF78761F8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC5D8C93-D380-44A4-850B-BDF78761F8F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC5D8C93-D380-44A4-850B-BDF78761F8F2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340} = {B63972D4-A441-4336-8FF5-FDC3ACDD4E99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ADC707B4-603F-4253-81D8-0B8DB97E445E}
