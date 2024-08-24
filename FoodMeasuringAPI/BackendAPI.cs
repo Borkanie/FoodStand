@@ -77,20 +77,17 @@ namespace FoodMeasuringAPI
             return _container.Resolve<IOrderService>().StartNewOrder();
         }
 
-
         /// <inheritdoc cref="IOrderService.UpdateOrder(Order)"/>
         public bool UpdateOrder(Order order)
         {
             return _container.Resolve<IOrderService>().UpdateOrder(order);
         }
 
-
         /// <inheritdoc cref="IOrderService.ResetOrder(Guid)"/>
         public bool ResetOrder(Guid id)
         {
             return _container.Resolve<IOrderService>().ResetOrder(id);
         }
-
 
         /// <inheritdoc cref="IOrderService.ResetAllOrders()"/>
         public bool ResetAllOrders()
@@ -132,7 +129,7 @@ namespace FoodMeasuringAPI
         }
 
         /// <inheritdoc cref="ILocalizationService.GetFoodChanges()"/>
-        public Dictionary<Item,int> GetFoodChanges()
+        public Dictionary<Contianer,int> GetFoodChanges()
         {
             return _container.Resolve<ILocalizationService>().GetFoodChanges();
         }

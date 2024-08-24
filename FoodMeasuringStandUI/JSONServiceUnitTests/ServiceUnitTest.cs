@@ -33,7 +33,7 @@ namespace ServiceUnitTests
                 new InjectionConstructor(new object[] { _container, random.ToString() + "TestFoodService.json" }));
             _container.RegisterType<IOrderService, OrderService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] { _container, random.ToString() + "TestOrder.json" }));
+                new InjectionConstructor(new object[] { _container, random.ToString() + "TestOrder.json", random.ToString() + "OrderCache.json" }));
         }
 
         public void Dispose()

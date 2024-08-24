@@ -56,7 +56,7 @@ namespace JSONService
             {
                 for (int j = 0; j < column; j++)
                 {
-                    map.Get(i, j).Quantity = random.Next(500);
+                    map.Get(i, j).AvailableQuantity = random.Next(500);
                     var location = new Location(i, j);
                     map.SetQuantity(random.Next(5000), location);
                     var foodChoice = ((i + 1) * (j + 1)) % 6;

@@ -1,5 +1,4 @@
 ﻿using FoodMeasuringObjects.Foods;
-using FoodMeasuringObjects.Orders;
 using FoodMeasuringObjects.Telemetry;
 using Services;
 using System;
@@ -101,12 +100,12 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Dictionary<Item, int> GetFoodChanges()
+        public Dictionary<Contianer, int> GetFoodChanges()
         {
             var oldFoodMap = FoodMap; 
             ReadNewQuantitiesAndReapplyMapping(oldFoodMap);
 
-            var foods = new Dictionary<Item, int>();
+            var foods = new Dictionary<Contianer, int>();
 
             for (int i = 0; i < FoodMap.ElementsOnLine; i++){
                 for(int j=0; j < FoodMap.ElementsOnColumn; j++)
@@ -114,7 +113,7 @@ namespace JSONService
                     var oldFoood = oldFoodMap.Get(i, j);
                     if (oldFoood.Food is not null){
                         var newValue = FoodMap.Get(i, j);
-                        foods.Add(newValue, oldFoood.Quantity - newValue.Quantity);
+                        foods.Add(newValue, oldFoood.AvailableQuantity - newValue.AvailableQuantity);
                     }
                 }
             }
@@ -122,16 +121,16 @@ namespace JSONService
             return foods;
         }
 
-        public List<Item> GetItemList()
+        public List<Contianer> GetItemList()
         {
-            var list = new List<Item>();
+            var list = new List<Contianer>();
             foreach(var item in FoodMap.GetItemList())
             {
-                var newItem = new Item()
+                var newItem = new Contianer()
                 {
                     Food = item.Food,
                     Id = item.Id,
-                    Quantity = item.Quantity,
+                    AvailableQuantity = item.AvailableQuantity,
                     Type = item.Type,
                 };
                 list.Add(newItem);

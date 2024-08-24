@@ -1,7 +1,14 @@
-﻿namespace FoodMeasuringObjects.Orders
+﻿using FoodMeasuringObjects.Foods;
+
+namespace FoodMeasuringObjects.Orders
 {
     public class Order
     {
+        public Order()
+        {
+            Id = Guid.NewGuid();    
+        }
+
         public Guid Id { get; set; }
 
         public List<Item> Items { get; set; } = new List<Item>();

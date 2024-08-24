@@ -1,4 +1,5 @@
-﻿using FoodMeasuringObjects.Orders;
+﻿using FoodMeasuringObjects.Foods;
+using FoodMeasuringObjects.Orders;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,11 @@ namespace JSONService
         UnityContainer _container;
         JSONDatabase<Order> _confirmedOrders;
         JSONDatabase<Order> _activeOrders;
-        public OrderService(UnityContainer container, string path = "_confirmedOrders.json")
+        public OrderService(UnityContainer container, string path = "_confirmedOrders.json", string tempCach = "orderCache.json")
         {
             _container = container;
             _confirmedOrders = new JSONDatabase<Order>(path);
-            _activeOrders = new JSONDatabase<Order>("orderCache.json");
+            _activeOrders = new JSONDatabase<Order>(tempCach);
         }
 
 
@@ -31,7 +32,7 @@ namespace JSONService
                 return false;
             }
             order.Items.Add(item);
-            return _activeOrders.Remove(order) && _confirmedOrders.Add(order);
+            return _activeOrders.Remove(order) && _activeOrders.Add(order);
         }
 
         /// <inheritdoc/>
@@ -51,12 +52,18 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
+        public Item CreateItem(Contianer source)
+        {
+            return new Item(source.Food);
+        }
+
+        /// <inheritdoc/>
         public int GetTotalCost(Guid id)
         {
             var order = _activeOrders.GetElements().FirstOrDefault(x => x.Id == id);
             if (order == null)
             {
-                return -1;
+                return 0;
             }
             
             return order.GetTotalCost();

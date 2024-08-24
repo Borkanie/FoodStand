@@ -2,6 +2,14 @@
 {
     public class Food
     {
+        public static readonly Food Default = new Food()
+        {
+            Name = "No Food Set",
+            Description = "This is a dummy",
+            Price = 0
+        };
+
+
         public String Name { get; set; } = "";
 
         public string Description { get; set; } = "";

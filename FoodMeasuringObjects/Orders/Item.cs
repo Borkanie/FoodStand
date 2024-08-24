@@ -1,58 +1,36 @@
 ﻿using FoodMeasuringObjects.Foods;
-using FoodMeasuringObjects.Telemetry;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FoodMeasuringObjects.Orders
 {
     public class Item
     {
-        public Item()
-        {
-            Id = Guid.NewGuid();
-        }
-
         public Item(Food food)
         {
             Food = food;
-            Id = Guid.NewGuid();
         }
+
+        public Food Food { get; set; } 
 
         public int Cost
         {
             get
             {
+                if (Food is null)
+                    return 0;
                 return Food.Price * Quantity;
             }
         }
 
-        public Guid Id { get; set; }
-
-        public Food Food { get; set; } = new Food()
-        {
-            Name = "No Food Set",
-            Description = "This is a dummy",
-            Price = 0            
-        };
-
-        private int _quantity = 0;
-        public int Quantity
-        {
-            get { return _quantity; }
-            set
-            {
-                _quantity = value;
-            }
-        }
-
-        public FoodPortioningType Type { get; set; }
-
-        public int AvailableQuantity()
-        {
-            return Quantity / Food.WheigthPerPortion;
-        }
+        public int Quantity { get; set; } = 0;
 
         public override bool Equals(object? obj)
         {
-            if(obj is not Item || obj == null)
+            if (obj is not Item || obj == null)
             {
                 return false;
             }

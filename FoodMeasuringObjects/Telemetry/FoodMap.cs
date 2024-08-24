@@ -1,25 +1,24 @@
 ﻿using FoodMeasuringObjects.Foods;
-using FoodMeasuringObjects.Orders;
 
 namespace FoodMeasuringObjects.Telemetry
 {
     public class FoodMap
     {
-        private Item[,] itemTable { get; set; } 
+        private Contianer[,] itemTable { get; set; } 
         
         public FoodMap(int numberOfLines, int numberOfColumns)
         {
-            itemTable = new Item[numberOfLines, numberOfColumns];
+            itemTable = new Contianer[numberOfLines, numberOfColumns];
             for(int i=0; i < numberOfLines; i++)
             {
                 for(int j=0;j < numberOfColumns; j++)
                 {
-                    itemTable[i,j] = new Item();
+                    itemTable[i,j] = new Contianer();
                 }
             }
         }
 
-        public Item Get(int line, int column)
+        public Contianer Get(int line, int column)
         {
             if (itemTable == null || line > ElementsOnLine || column > ElementsOnColumn)
                 throw new IndexOutOfRangeException();
@@ -27,7 +26,7 @@ namespace FoodMeasuringObjects.Telemetry
             return itemTable[line,column];
         }
 
-        public Item Get(Location location)
+        public Contianer Get(Location location)
         {
             if (itemTable == null || location.Line > ElementsOnLine
                 || location.Column > ElementsOnColumn)
@@ -60,9 +59,9 @@ namespace FoodMeasuringObjects.Telemetry
             targetItem.Food = food;
         }
 
-        public List<Item> GetItemList()
+        public List<Contianer> GetItemList()
         {
-            var list = new List<Item>();
+            var list = new List<Contianer>();
 
             foreach (var item in itemTable)
             {
@@ -76,7 +75,7 @@ namespace FoodMeasuringObjects.Telemetry
         {
             if (LocationIsCorrect(location))
             {
-                itemTable[location.Line, location.Column].Quantity = quantity;
+                itemTable[location.Line, location.Column].AvailableQuantity = quantity;
             }
         }
 
@@ -144,11 +143,11 @@ namespace FoodMeasuringObjects.Telemetry
             {
                 for (int j = 0; j < ElementsOnColumn; j++)
                 {
-                    map.itemTable[i, j] = new Item()
+                    map.itemTable[i, j] = new Contianer()
                     {
                         Food = itemTable[i, j].Food,
                         Id = itemTable[i, j].Id,
-                        Quantity = itemTable[i, j].Quantity,
+                        AvailableQuantity = itemTable[i, j].AvailableQuantity,
                         Type = itemTable[i, j].Type,
                     };
                 }

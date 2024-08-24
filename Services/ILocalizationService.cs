@@ -1,5 +1,4 @@
 ﻿using FoodMeasuringObjects.Foods;
-using FoodMeasuringObjects.Orders;
 using FoodMeasuringObjects.Telemetry;
 
 namespace Services
@@ -27,7 +26,7 @@ namespace Services
         /// If th dictionary is null that means no food was picked up.
         /// </summary>
         /// <returns>A dicitonary of all the foods and the change in mass.</returns>
-        public Dictionary<Item, int> GetFoodChanges();
+        public Dictionary<Contianer, int> GetFoodChanges();
 
         /// <summary>
         /// Return the current populated <see cref="FoodMap"/>
@@ -39,7 +38,7 @@ namespace Services
         /// Returns a list of all populated Items.
         /// </summary>
         /// <returns></returns>
-        public List<Item> GetItemList();
+        public List<Contianer> GetItemList();
 
         /// <summary>
         /// Returns the size of the current <see cref="FoodMap"/>

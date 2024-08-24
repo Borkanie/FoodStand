@@ -1,4 +1,5 @@
-﻿using FoodMeasuringObjects.Orders;
+﻿using FoodMeasuringObjects.Foods;
+using FoodMeasuringObjects.Orders;
 using System;
 
 namespace Services
@@ -52,5 +53,11 @@ namespace Services
         /// <returns>True if the order was succesfully modified.</returns>
         public bool AddItemToOrder(Guid orderId,Item item);
 
+        /// <summary>
+        /// Creates an item from the food in a given container.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public Item CreateItem(Contianer source);
     }
 }
