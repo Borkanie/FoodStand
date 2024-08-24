@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Unity;
 using Unity.Injection;
+using Unity.Lifetime;
 
 namespace FoodMeasuringAPI
 {
@@ -24,11 +25,37 @@ namespace FoodMeasuringAPI
         private BackendAPI() 
         {
             _container = new UnityContainer();
-            var injection = new InjectionConstructor(_container);
-            _container.RegisterSingleton<IFoodService, FoodService>(injection);
-            _container.RegisterSingleton<ISensorReadingService, SensorMockingService>(injection);
-            _container.RegisterSingleton<ILocalizationService, LocalizationService>(injection);
-            _container.RegisterSingleton<IOrderService, OrderService>(injection);
+            _container.RegisterType<ISensorReadingService, SensorMockingService>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ILocalizationService, LocalizationService>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(_container));
+            _container.RegisterType<IFoodService, FoodService>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(new object[] { _container, "food.json"}));
+            _container.RegisterType<IOrderService, OrderService>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(new object[] {_container, "confirmedOrders.json" })); 
+        }
+
+        public UnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+        }
+
+        public static BackendAPI Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new BackendAPI();
+                }
+                return instance;
+            }
         }
 
         public static BackendAPI Instance
@@ -99,7 +126,7 @@ namespace FoodMeasuringAPI
         }
 
         /// <inheritdoc cref="ILocalizationService.AskForLocation(Food)"/>
-        public Location? AskForLocation(Food food)
+        public List<Location> AskForLocation(Food food)
         {
             return _container.Resolve<ILocalizationService>().AskForLocation(food);
         }

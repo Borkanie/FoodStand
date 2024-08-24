@@ -45,5 +45,12 @@ namespace Services
         /// <returns></returns>
         public Food[] GetFoods();
 
+        /// <summary>
+        /// Returns the food that hase as a name the given parameter.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns> Null if no element has that name in the database.</returns>
+        public Food? Get(string name);
+
     }
 }

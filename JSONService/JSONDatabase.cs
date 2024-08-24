@@ -23,14 +23,12 @@ namespace JSONService
                 try
                 {
                     filepath = path;
-                    Values = JObject.Parse(json: File.ReadAllText(path)).ToObject<List<T>>();
+                    Values = JsonConvert.DeserializeObject<List<T>>( File.ReadAllText(path));
                 }
                 catch(Exception ex) 
                 {
                     Console.WriteLine(ex.Message);
-                }
-
-                
+                }                
             }
             else
             {
@@ -48,7 +46,8 @@ namespace JSONService
                 {
                     File.Delete(filepath);
                 }
-                File.WriteAllText(filepath, JObject.FromObject(Values).ToString());
+                var obj = JsonConvert.SerializeObject(Values, Formatting.Indented);
+                File.WriteAllText(filepath, obj);
 
             }
             catch (Exception ex)
@@ -109,7 +108,7 @@ namespace JSONService
         /// <returns></returns>
         public T[] GetElements()
         {
-            return Values.ToArray();
+            return (T[])Values.ToArray().Clone();
         }
 
         public bool Contains(T element)

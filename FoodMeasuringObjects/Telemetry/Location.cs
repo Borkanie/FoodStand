@@ -16,5 +16,13 @@
         public int Line { get; set; } = 0;
 
         public int Column { get; set; } = 0;
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is null || obj is not Location) 
+                return false;
+            var loc = (Location)obj;
+            return loc.Line == Line && loc.Column == Column;    
+        }
     }
 }

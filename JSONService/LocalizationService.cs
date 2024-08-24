@@ -18,47 +18,59 @@ namespace JSONService
     {
         private FoodMap _foodMap;
         private UnityContainer _container;
-    
+
         public LocalizationService(UnityContainer serviceContainer)
         {
             _container = serviceContainer;
         }
 
         /// <inheritdoc/>
-        public FoodMap GetFoodMap()
+        public FoodMap FoodMap
         {
-            if(_foodMap is null)
-                ResetFoodMap();
-            return _foodMap;
+            get{
+                if(_foodMap is null)
+                    ResetFoodMap();
+                return _foodMap;
+            }
         }
 
         /// <inheritdoc/>
         public void ResetFoodMap()
         {
-            _foodMap = _container.Resolve<ISensorReadingService>().getLatestReadings();
-             
-            foreach (var food in _container.Resolve<IFoodService>().GetFoods())
+            if(_foodMap is not null)
             {
-                var location = AskForLocation(food);
-                _foodMap.AddFood(food, location);
-            }            
+                FoodMap oldMap = _foodMap;
+                _foodMap = _container.Resolve<ISensorReadingService>().getLatestReadings();
+                foreach (var food in _container.Resolve<IFoodService>().GetFoods())
+                {
+                    var location = oldMap.AskForLocation(food);
+                    foreach (var loc in location)
+                        FoodMap.AddFood(food, loc);
+                }
+            }
+            else
+            {
+                _foodMap = _container.Resolve<ISensorReadingService>().getLatestReadings();
+            }           
         }
 
         /// <inheritdoc/>
-        public Location? AskForLocation(Food food)
+        public List<Location> AskForLocation(Food food)
         {
-
-            for(int i = 0; i < _foodMap.ElementsOnLine; i++)
+            List<Location> locations = new List<Location>();
+            for(int i = 0; i < FoodMap.ElementsOnLine; i++)
             {
-                for(int j=0;j< _foodMap.ElementsOnColumn; j++)
+                for(int j=0;j< FoodMap.ElementsOnColumn; j++)
                 {
-                    if(_foodMap.Get(i,j) == null)
+                    if(FoodMap.Get(i, j) is not null &&
+                        FoodMap.Get(i,j)!.Food is not null && 
+                        FoodMap.Get(i, j)!.Food! == food)
                     {
-                        return new Location() { Line = i, Column = j };
+                        locations.Add( new Location() { Line = i, Column = j });
                     }
                 }
             }
-            return null;
+            return locations;
         }
 
         /// <summary>
@@ -69,19 +81,19 @@ namespace JSONService
         private void ReadNewQuantitiesAndReapplyMapping(FoodMap oldFoodMap)
         {
             ResetFoodMap();
-            if(_foodMap.ElementsOnLine != oldFoodMap.ElementsOnLine || _foodMap.ElementsOnColumn != oldFoodMap.ElementsOnColumn)
+            if(FoodMap.ElementsOnLine != oldFoodMap.ElementsOnLine || FoodMap.ElementsOnColumn != oldFoodMap.ElementsOnColumn)
             {
                 throw new InvalidOperationException("We cannot change the size of the map from this method");
             }
 
-            for (int line = 0; line < _foodMap.ElementsOnLine; line++)
+            for (int line = 0; line < FoodMap.ElementsOnLine; line++)
             {
-                for (int column = 0; column < _foodMap.ElementsOnColumn; column++)
+                for (int column = 0; column < FoodMap.ElementsOnColumn; column++)
                 {
                     var food = oldFoodMap.Get(line, column);
-                    if(food != null)
+                    if(food is null)
                     {
-                        _foodMap.AddFood(food.Food, new Location() { Column = column, Line = line });
+                        FoodMap.AddFood(food.Food, new Location() { Column = column, Line = line });
                     }
                 }
             }
@@ -91,23 +103,60 @@ namespace JSONService
         /// <inheritdoc/>
         public Dictionary<Item, int> GetFoodChanges()
         {
-            var oldFoodMap = _foodMap; 
+            var oldFoodMap = FoodMap; 
             ReadNewQuantitiesAndReapplyMapping(oldFoodMap);
 
             var foods = new Dictionary<Item, int>();
 
-            for (int i = 0; i < _foodMap.ElementsOnLine; i++){
-                for(int j=0; j < _foodMap.ElementsOnColumn; j++)
+            for (int i = 0; i < FoodMap.ElementsOnLine; i++){
+                for(int j=0; j < FoodMap.ElementsOnColumn; j++)
                 {
                     var oldFoood = oldFoodMap.Get(i, j);
-                    if (oldFoood.Food != null){
-                        var location = new Location(i, j);
-                        _foodMap.AddFood(oldFoood.Food, location);
+                    if (oldFoood.Food is not null){
+                        var newValue = FoodMap.Get(i, j);
+                        foods.Add(newValue, oldFoood.Quantity - newValue.Quantity);
                     }
                 }
             }
             
             return foods;
+        }
+
+        public List<Item> GetItemList()
+        {
+            var list = new List<Item>();
+            foreach(var item in FoodMap.GetItemList())
+            {
+                var newItem = new Item()
+                {
+                    Food = item.Food,
+                    Id = item.Id,
+                    Quantity = item.Quantity,
+                    Type = item.Type,
+                };
+                list.Add(newItem);
+            }
+            return list;
+        }
+
+        public Tuple<int, int> GetSize()
+        {
+            return new Tuple<int,int>(
+                FoodMap.ElementsOnLine,FoodMap.ElementsOnColumn);
+        }
+
+        public bool AddFood(Food food, Location location)
+        {
+            if (FoodMap.ElementsOnLine <= location.Line
+               || FoodMap.ElementsOnColumn <= location.Column)
+                return false;
+            FoodMap.AddFood(food,location);
+            return true;
+        }
+
+        public FoodMap GetFoodMap()
+        {
+            return FoodMap.Clone();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace JSONService
         UnityContainer _container;
         JSONDatabase<Order> _confirmedOrders;
         JSONDatabase<Order> _activeOrders;
-        public OrderService(UnityContainer container, string path = "_confirmedOrders.dbb")
+        public OrderService(UnityContainer container, string path = "_confirmedOrders.json")
         {
             _container = container;
             _confirmedOrders = new JSONDatabase<Order>(path);

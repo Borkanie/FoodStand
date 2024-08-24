@@ -26,7 +26,12 @@ namespace FoodMeasuringObjects.Orders
 
         public Guid Id { get; set; }
 
-        public Food Food { get; set; }
+        public Food Food { get; set; } = new Food()
+        {
+            Name = "No Food Set",
+            Description = "This is a dummy",
+            Price = 0            
+        };
 
         private int _quantity = 0;
         public int Quantity
@@ -34,7 +39,7 @@ namespace FoodMeasuringObjects.Orders
             get { return _quantity; }
             set
             {
-                _quantity += value / Food.WheigthPerPortion;
+                _quantity = value;
             }
         }
 
@@ -43,6 +48,29 @@ namespace FoodMeasuringObjects.Orders
         public int AvailableQuantity()
         {
             return Quantity / Food.WheigthPerPortion;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is not Item || obj == null)
+            {
+                return false;
+            }
+            Item item = (Item)obj;
+            if (item.Food is not null)
+                return Food is not null && item.Food! == Food!;
+            else
+                return Food is null;
+        }
+
+        public static bool operator ==(Item left, Item right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Item left, Item right)
+        {
+            return !left.Equals(right);
         }
     }
 }
