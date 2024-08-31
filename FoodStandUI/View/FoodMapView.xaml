@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              x:Class="FoodStandUI.View.FoodMapView"
              xmlns:local="clr-namespace:FoodStandUI.ViewModel.Components"
              xmlns:ui="clr-namespace:FoodStandUI.View.Components">
     <ContentView.BindingContext>
         <local:FoodMapViewModel/>
     </ContentView.BindingContext>
-    <CollectionView ItemsSource="{Binding ItemList}"
-                    Margin="10"
-                    VerticalOptions="Start"
-                    HorizontalOptions="FillAndExpand">
+    
+    <ContentView.Resources>
+        <!-- Define DataTemplate for floating containers -->
+        <DataTemplate x:Key="FloatingContainerTemplate">
+            <Frame Padding="0" HasShadow="True" CornerRadius="10" Margin="10"
+                   HeightRequest="150" WidthRequest="150">
+                <Frame.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.5"/>
+                </Frame.Shadow>
 
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout Orientation="Horizontal" Span="3"/>
-        </CollectionView.ItemsLayout>
+                <!-- The layout of each container -->
+                <Grid>
+                    <!-- Background image 
+                    <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <ui:ItemView />
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
+                    <!-- StackPanel for name and description -->
+                    <StackLayout VerticalOptions="End" Padding="10" BackgroundColor="#80000000">
+                        <!-- Name -->
+                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                        <!-- Description -->
+                        <Label Text="{Binding Description}" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </DataTemplate>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <!-- ListView or CollectionView to display the floating containers -->
+        <CollectionView ItemsSource="{Binding ItemList}" 
+                    ItemTemplate="{StaticResource FloatingContainerTemplate}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal" Span="4"/>
+            </CollectionView.ItemsLayout>
         </CollectionView>
+    </ContentView.Content>
 </ContentView>

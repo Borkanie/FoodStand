@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodStandUI.MainPage"
              xmlns:views="clr-namespace:FoodStandUI.View">
-
+    <ContentPage.Background>
+        <!-- Reuse the PurpleRadialGradientBrush defined in App.xaml -->
+        <StaticResource Key="PurpleRadialGradientBrush" />
+    </ContentPage.Background>
+    
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"

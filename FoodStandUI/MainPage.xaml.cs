@@ -9,8 +9,8 @@ namespace FoodStandUI
 
         public MainPage()
         {
-            InitializeComponent();
             FoodMap = new FoodMapViewModel();
+            InitializeComponent();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
