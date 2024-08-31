@@ -101,6 +101,16 @@ namespace JSONService
                 return false;
             }
         }
+        
+        public bool Update(T item)
+        {
+            if (Values.Contains(item) || !Values.Remove(item))
+            {
+                return false;
+            }
+            Values.Add(item);
+            return UpdateList();            
+        }
 
         /// <summary>
         /// This will return a copy of the values in the lsit not a pointer to the list tiself.
