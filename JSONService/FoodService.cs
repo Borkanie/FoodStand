@@ -79,5 +79,17 @@ namespace JSONService
         {
             return database.GetElements().FirstOrDefault(x => x.Name == name);
         }
+
+        /// <inheritdoc/>
+        public bool UpdateName(Food food, string name)
+        {
+            var old = database.GetElements().FirstOrDefault(x => x.Name == food.Name);
+            if(old is not null)
+            {
+                old.Name = name;
+                return (database.Remove(old) && database.Add(old));                
+            }
+            return false;
+        }
     }
 }

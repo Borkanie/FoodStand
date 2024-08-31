@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:FoodStandUI.ViewModel.Components"
              xmlns:ui="clr-namespace:FoodStandUI.View.Components">
     <ContentView.BindingContext>
-        <local:ItemViewModel/>
+        <local:ContainerViewModel/>
     </ContentView.BindingContext>
     
     <VerticalStackLayout>

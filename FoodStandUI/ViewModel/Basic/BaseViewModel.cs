@@ -14,7 +14,7 @@ namespace FoodStandUI.ViewModel.Basic
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(caller));
             }

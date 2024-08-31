@@ -52,7 +52,7 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Item CreateItem(Contianer source)
+        public Item CreateItem(FoodContainer source)
         {
             return new Item(source.Food);
         }
@@ -128,11 +128,11 @@ namespace JSONService
 
         public Order? GetOrder(Guid id)
         {
-            if(_activeOrders.GetElements().FirstOrDefault(_x => _x.Id == id) != null)
+            if(_activeOrders.GetElements().FirstOrDefault(_x => _x.Id == id) is not null)
             {
                 return _activeOrders.GetElements().First(x => x.Id == id);  
             }
-            if(_confirmedOrders.GetElements().FirstOrDefault(_x => _x.Id == id) != null)
+            if(_confirmedOrders.GetElements().FirstOrDefault(_x => _x.Id == id) is not null)
             {
                 return _confirmedOrders.GetElements().First(x => x.Id == id);
             }

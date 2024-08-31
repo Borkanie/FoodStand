@@ -58,7 +58,7 @@ namespace JSONServiceUnitTests
             // Act
             order.Items.Add(item);
             orderService.AddItemToOrder(order1.Id, item);
-
+            order1 = orderService.GetOrder(order1.Id);
 
             // Assert
             Assert.True(order.GetTotalCost() == order1.GetTotalCost());
@@ -66,7 +66,7 @@ namespace JSONServiceUnitTests
         }
 
         [Fact]
-        public void AddItemToOrderShouldReturnTrueIfItemWasAddedAndBackedInDB()
+        public void OrderShouldBeEmptyInFrontEndIfItemWasAddedAndBackedInDB()
         {
             // Arrange
             var orderService = _container.Resolve<IOrderService>();
@@ -80,7 +80,7 @@ namespace JSONServiceUnitTests
 
 
             // Assert
-            Assert.NotEmpty(order.Items);
+            Assert.Empty(order.Items);
             Assert.True(resut);
         }
 
@@ -203,6 +203,7 @@ namespace JSONServiceUnitTests
             var localService = _container.Resolve<ILocalizationService>();
             var order = orderService.StartNewOrder();
             var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+            item.Quantity = 100;
 
             // Act
             order.Items.Add(item);
@@ -222,6 +223,7 @@ namespace JSONServiceUnitTests
             var localService = _container.Resolve<ILocalizationService>();
             var order = orderService.StartNewOrder();
             var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+            item.Quantity = 100;
             orderService.AddItemToOrder(order.Id, item);
 
             // Act

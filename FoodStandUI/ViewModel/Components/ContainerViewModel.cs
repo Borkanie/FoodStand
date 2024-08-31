@@ -1,29 +1,32 @@
-﻿using FoodMeasuringObjects.Foods;
+﻿using FoodMeasuringAPI;
+using FoodMeasuringObjects.Foods;
 using FoodMeasuringObjects.Orders;
 using FoodStandUI.ViewModel.Basic;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity;
 
 namespace FoodStandUI.ViewModel.Components
 {
-    internal class ItemViewModel : BaseViewModel
+    internal class ContainerViewModel : BaseViewModel
     {
-        Item model;
+        FoodContainer model;
 
-        public ItemViewModel()
+        public ContainerViewModel()
         {
             
         }
 
-        public ItemViewModel(Item model)
+        public ContainerViewModel(FoodContainer model)
         {
             this.model = model;
         }
 
-        public Item Model
+        public FoodContainer Model
         {
             get => model;
             set
@@ -33,14 +36,6 @@ namespace FoodStandUI.ViewModel.Components
                     model = value;
                     RaisePropertyChanged(nameof(Model));
                 }
-            }
-        }
-
-        public int Cost
-        {
-            get
-            {
-                return model.Cost;
             }
         }
 
@@ -55,6 +50,7 @@ namespace FoodStandUI.ViewModel.Components
                 if (model.Food != value)
                 {
                     model.Food = value;
+                    BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(value, model.Location);
                     this.RaisePropertyChanged();
                 }
             }
@@ -64,15 +60,7 @@ namespace FoodStandUI.ViewModel.Components
         {
             get
             {
-                return model.Quantity;
-            }
-            set
-            {
-                if (model.Quantity != value)
-                {
-                    model.Quantity = value;
-                    this.RaisePropertyChanged();
-                }
+                return model.AvailableQuantity;
             }
         }
 

@@ -10,7 +10,7 @@ namespace FoodStandUI
         public MainPage()
         {
             InitializeComponent();
-            FoodMap = new FoodMapViewModel(BackendAPI.Instance.GetFoodMap());
+            FoodMap = new FoodMapViewModel();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)

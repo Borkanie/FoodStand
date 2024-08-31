@@ -100,12 +100,12 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Dictionary<Contianer, int> GetFoodChanges()
+        public Dictionary<FoodContainer, int> GetFoodChanges()
         {
             var oldFoodMap = FoodMap; 
             ReadNewQuantitiesAndReapplyMapping(oldFoodMap);
 
-            var foods = new Dictionary<Contianer, int>();
+            var foods = new Dictionary<FoodContainer, int>();
 
             for (int i = 0; i < FoodMap.ElementsOnLine; i++){
                 for(int j=0; j < FoodMap.ElementsOnColumn; j++)
@@ -121,12 +121,12 @@ namespace JSONService
             return foods;
         }
 
-        public List<Contianer> GetItemList()
+        public List<FoodContainer> GetItemList()
         {
-            var list = new List<Contianer>();
+            var list = new List<FoodContainer>();
             foreach(var item in FoodMap.GetItemList())
             {
-                var newItem = new Contianer()
+                var newItem = new FoodContainer(item.Location)
                 {
                     Food = item.Food,
                     Id = item.Id,

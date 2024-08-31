@@ -1,11 +1,13 @@
 ﻿using FoodMeasuringAPI;
 using FoodMeasuringObjects.Foods;
 using FoodStandUI.ViewModel.Basic;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity;
 
 namespace FoodStandUI.ViewModel.Components
 {
@@ -22,10 +24,11 @@ namespace FoodStandUI.ViewModel.Components
 
             set
             {
-                Food newModel = model;
-                newModel.Name = value;
-                if (BackendAPI.Update(newModel))
+                var old = BackendAPI.FoodService.Get(model.Name);
+                if (old is not null && BackendAPI.FoodService.UpdateName(old,value))
                 {
+                    model = old;
+                    model.Name = value;
                     RaisePropertyChanged();
                 }
             }
@@ -42,8 +45,9 @@ namespace FoodStandUI.ViewModel.Components
             {
                 Food newModel = model;
                 newModel.Description = value;
-                if (BackendAPI.Update(newModel))
+                if (BackendAPI.FoodService.Update(newModel))
                 {
+                    model.Description = value;
                     RaisePropertyChanged();
                 }
             }
@@ -60,8 +64,9 @@ namespace FoodStandUI.ViewModel.Components
             {
                 Food newModel = model;
                 newModel.WheigthPerPortion = value;
-                if (BackendAPI.Update(newModel))
+                if (BackendAPI.FoodService.Update(newModel))
                 {
+                    model.WheigthPerPortion = value;
                     RaisePropertyChanged();
                 }
             }
@@ -77,8 +82,9 @@ namespace FoodStandUI.ViewModel.Components
             {
                 Food newModel = model;
                 newModel.Price = value;
-                if (BackendAPI.Update(newModel))
+                if (BackendAPI.FoodService.Update(newModel))
                 {
+                    model.Price = value;
                     RaisePropertyChanged();
                 }
             }

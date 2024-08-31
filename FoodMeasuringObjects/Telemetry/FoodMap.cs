@@ -4,21 +4,21 @@ namespace FoodMeasuringObjects.Telemetry
 {
     public class FoodMap
     {
-        private Contianer[,] itemTable { get; set; } 
+        private FoodContainer[,] itemTable { get; set; } 
         
         public FoodMap(int numberOfLines, int numberOfColumns)
         {
-            itemTable = new Contianer[numberOfLines, numberOfColumns];
+            itemTable = new FoodContainer[numberOfLines, numberOfColumns];
             for(int i=0; i < numberOfLines; i++)
             {
                 for(int j=0;j < numberOfColumns; j++)
                 {
-                    itemTable[i,j] = new Contianer();
+                    itemTable[i,j] = new FoodContainer(new Location() { Line = i, Column = j});
                 }
             }
         }
 
-        public Contianer Get(int line, int column)
+        public FoodContainer Get(int line, int column)
         {
             if (itemTable == null || line > ElementsOnLine || column > ElementsOnColumn)
                 throw new IndexOutOfRangeException();
@@ -26,7 +26,7 @@ namespace FoodMeasuringObjects.Telemetry
             return itemTable[line,column];
         }
 
-        public Contianer Get(Location location)
+        public FoodContainer Get(Location location)
         {
             if (itemTable == null || location.Line > ElementsOnLine
                 || location.Column > ElementsOnColumn)
@@ -59,9 +59,9 @@ namespace FoodMeasuringObjects.Telemetry
             targetItem.Food = food;
         }
 
-        public List<Contianer> GetItemList()
+        public List<FoodContainer> GetItemList()
         {
-            var list = new List<Contianer>();
+            var list = new List<FoodContainer>();
 
             foreach (var item in itemTable)
             {
@@ -143,7 +143,7 @@ namespace FoodMeasuringObjects.Telemetry
             {
                 for (int j = 0; j < ElementsOnColumn; j++)
                 {
-                    map.itemTable[i, j] = new Contianer()
+                    map.itemTable[i, j] = new FoodContainer(new Location() { Line = i, Column = j })
                     {
                         Food = itemTable[i, j].Food,
                         Id = itemTable[i, j].Id,

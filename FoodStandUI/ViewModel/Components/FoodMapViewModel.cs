@@ -1,87 +1,70 @@
-﻿using FoodMeasuringAPI;
+﻿using Autofac.Core;
+using FoodMeasuringAPI;
 using FoodMeasuringObjects.Foods;
 using FoodMeasuringObjects.Orders;
 using FoodMeasuringObjects.Telemetry;
 using FoodStandUI.ViewModel.Basic;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity;
 
 namespace FoodStandUI.ViewModel.Components
 {
     internal class FoodMapViewModel : BaseViewModel
     {
-        FoodMap model;
-        
-        public FoodMap Model
-        {
-            get => model;
-            set
-            {
-                if(model != value)
-                {
-                    model = value;
-                    ItemList.Clear();
-                    foreach (var item in model.GetItemList())
-                    {
-                        ItemList.Add(new ItemViewModel(item));
-                    }
-                    RaisePropertyChanged(nameof(Model));
-                }
-            }
-        }
         
         public FoodMapViewModel()
         {
-            
+
         }
 
-
-        public FoodMapViewModel(FoodMap model)
+        public FoodMap Model
         {
-            this.model = model;            
+            get => BackendAPI.Instance.Container.Resolve<ILocalizationService>().GetFoodMap();
         }
 
-        public ItemViewModel Get(int line, int column)
+        public ContainerViewModel Get(int line, int column)
         {
-            var item = model.Get(line, column);
-            if(item == null)
-                return new ItemViewModel();
+            var item = Model.Get(line, column);
+            if(item is null)
+                return new ContainerViewModel();
             else
-                return new ItemViewModel(item);
+                return new ContainerViewModel(item);
         }
 
-        public ItemViewModel Get(FoodMeasuringObjects.Telemetry.Location location)
+        public ContainerViewModel Get(FoodMeasuringObjects.Telemetry.Location location)
         {
-            if (model.Get(location) != null)
-                return new ItemViewModel(model.Get(location)!);
+            if (Model.Get(location) is not null)
+                return new ContainerViewModel(Model.Get(location));
             else
-                return new ItemViewModel();
+                return new ContainerViewModel();
         }
 
         public int ElementsOnLine()
         {
-            return model.ElementsOnLine;
+            return Model.ElementsOnLine;
         }
 
         public int ElementsOnColumn()
         {
-            return model.ElementsOnColumn;
+            return Model.ElementsOnColumn;
         }
 
         public void AddFood(Food food, FoodMeasuringObjects.Telemetry.Location targetLocation)
         {
-            model.AddFood(food, targetLocation);
+            Model.AddFood(food, targetLocation);
         }
 
-        public ObservableCollection<ItemViewModel> ItemList { get; } = new ObservableCollection<ItemViewModel>();
+        public ObservableCollection<ContainerViewModel> ItemList { get; } = new ObservableCollection<ContainerViewModel>();
 
-        public void SetItem(Item item, FoodMeasuringObjects.Telemetry.Location location)
+        public void SetItem(Food food, FoodMeasuringObjects.Telemetry.Location location)
         {
-            model.SetItem(item, location);
+            BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(food, location);
         }
 
     }
