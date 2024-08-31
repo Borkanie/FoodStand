@@ -58,18 +58,6 @@ namespace FoodMeasuringAPI
             }
         }
 
-        public static BackendAPI Instance
-        {
-            get
-            {
-                if(instance == null)
-                {
-                    instance = new BackendAPI();
-                }
-                return instance;
-            }
-        }
-
         #region IOrderService
         /// <inheritdoc cref="IOrderService.StartNewOrder()"/>
         public Order StartNewOrder()
@@ -77,16 +65,22 @@ namespace FoodMeasuringAPI
             return _container.Resolve<IOrderService>().StartNewOrder();
         }
 
-        /// <inheritdoc cref="IOrderService.UpdateOrder(Order)"/>
-        public bool UpdateOrder(Order order)
+        /// <inheritdoc cref="IOrderService.RemoveItem(Guid id, Item item)"/>
+        public bool RemoveItem(Guid id, Item item)
         {
-            return _container.Resolve<IOrderService>().UpdateOrder(order);
+            return _container.Resolve<IOrderService>().RemoveItem(id,item);
         }
 
-        /// <inheritdoc cref="IOrderService.ResetOrder(Guid)"/>
+        /// <inheritdoc cref="IOrderService.UpdateItem(Guid id, Item item)"/>
+        public bool UpdateItem(Guid id, Item item)
+        {
+            return _container.Resolve<IOrderService>().UpdateItem(id,item);
+        }
+
+        /// <inheritdoc cref="IOrderService.DeleteOrder(Guid)"/>
         public bool ResetOrder(Guid id)
         {
-            return _container.Resolve<IOrderService>().ResetOrder(id);
+            return _container.Resolve<IOrderService>().DeleteOrder(id);
         }
 
         /// <inheritdoc cref="IOrderService.ResetAllOrders()"/>

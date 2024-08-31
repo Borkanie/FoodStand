@@ -16,17 +16,27 @@ namespace Services
         public Order StartNewOrder();
 
         /// <summary>
-        /// Send changes to the order.
+        /// Send changes to the order and try to save them in backend.
         /// </summary>
-        /// <param name="order">The new valeus of the order.</param>
+        /// <param name="id">The identifier of the targeted order.</param>
+        /// <param name="item">The new values that will override the current valeus in the database.</param>
         /// <returns>True if the change has been saved into the database.</returns>
-        public bool UpdateOrder(Order order);
+        public bool UpdateItem(Guid id, Item item);
+
+        /// <summary>
+        /// Removes an item from an order.
+        /// </summary>
+        /// <param name="id">The identifier of the targeted order.</param>
+        /// <param name="item">The <see cref="Item"/> that will be removed from the order.
+        /// it will be identified by the equal operator so by it's name.</param>
+        /// <returns>True if the change has been saved into the database.</returns>
+        public bool RemoveItem(Guid id, Item item);
 
         /// <summary>
         /// Resets all the items in an order.
         /// </summary>
         /// <returns>Returns True if the order was succesfully removed from the database.</returns>
-        public bool ResetOrder(Guid id);
+        public bool DeleteOrder(Guid id);
 
         /// <summary>
         /// Removes all orders.
@@ -59,5 +69,12 @@ namespace Services
         /// <param name="source"></param>
         /// <returns></returns>
         public Item CreateItem(Contianer source);
+
+        /// <summary>
+        /// Returns an order identified by it's Id form the database.
+        /// </summary>
+        /// <param name="id">id of the order.</param>
+        /// <returns>Return null fi no roder is found.</returns>
+        public Order? GetOrder(Guid id);
     }
 }

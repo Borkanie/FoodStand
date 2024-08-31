@@ -145,7 +145,7 @@ namespace JSONServiceUnitTests
         }
 
         [Fact]
-        public void ResetOrdersShouldClearAllItemsEvenAddedDirectlyToObject()
+        public void ResetOrdersShouldClearAllItemsFromOrder()
         {
             // Arrange
             var orderService = _container.Resolve<IOrderService>();
@@ -157,11 +157,117 @@ namespace JSONServiceUnitTests
             orderService.AddItemToOrder(order.Id, item);
 
             // Act
-            orderService.ResetOrder(order.Id);
+            orderService.DeleteOrder(order.Id);
 
             // Assert
             Assert.True(orderService.GetTotalCost(order.Id) == 0);
             Assert.True(order.GetTotalCost() != 0);
+        }
+
+        [Fact]
+        public void UpdateItemOnUnexistingOrderShouldReturnFalse()
+        {
+            // Arrange
+            var orderService = _container.Resolve<IOrderService>();
+            var localService = _container.Resolve<ILocalizationService>();
+            var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+
+            // Act
+            var value = orderService.UpdateItem(Guid.NewGuid(), item);
+
+            // Assert
+            Assert.False(value);
+        }
+
+        [Fact]
+        public void UpdateItemWithUncontianedItemShouldReturnFalse()
+        {
+            // Arrange
+            var orderService = _container.Resolve<IOrderService>();
+            var localService = _container.Resolve<ILocalizationService>();
+            var order = orderService.StartNewOrder();
+            var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+
+            // Act
+            var value = orderService.UpdateItem(order.Id, item);
+
+            // Assert
+            Assert.False(value);
+        }
+
+        [Fact]
+        public void UpdateItemShouldNotAffectDataBaseWhenAddingDirectly()
+        {
+            // Arrange
+            var orderService = _container.Resolve<IOrderService>();
+            var localService = _container.Resolve<ILocalizationService>();
+            var order = orderService.StartNewOrder();
+            var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+
+            // Act
+            order.Items.Add(item);
+            var real = orderService.GetOrder(order.Id);
+
+            // Assert
+            Assert.NotEqual(real.GetTotalCost(), order.GetTotalCost());
+            Assert.Contains(item, order.Items);
+            Assert.DoesNotContain(item, real.Items);
+        }
+
+        [Fact]
+        public void RemoveItemShluldNotRemoveFromDataBseWhenRemoveingDirectly()
+        {
+            // Arrange
+            var orderService = _container.Resolve<IOrderService>();
+            var localService = _container.Resolve<ILocalizationService>();
+            var order = orderService.StartNewOrder();
+            var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+            orderService.AddItemToOrder(order.Id, item);
+
+            // Act
+            order.Items.Remove(item);
+            var real = orderService.GetOrder(order.Id);
+
+            // Assert
+            Assert.NotEqual(real.GetTotalCost(), order.GetTotalCost());
+            Assert.Contains(item, real.Items);
+            Assert.DoesNotContain(item, order.Items);    
+        }
+
+        [Fact]
+        public void RemoveItemWithUncontianedItemShouldReturnFalse()
+        {
+            // Arrange
+            var orderService = _container.Resolve<IOrderService>();
+            var localService = _container.Resolve<ILocalizationService>();
+            var order = orderService.StartNewOrder();
+            var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+
+            // Act
+            var value = orderService.RemoveItem(order.Id, item);
+
+            // Assert
+            Assert.False(value);
+        }
+
+        [Fact]
+        public void RemoveItemShluldRemoveFromDataBseWhenRemoveingTroughService()
+        {
+            // Arrange
+            var orderService = _container.Resolve<IOrderService>();
+            var localService = _container.Resolve<ILocalizationService>();
+            var order = orderService.StartNewOrder();
+            var item = orderService.CreateItem(localService.GetItemList().First(x => x.Food != Food.Default));
+            orderService.AddItemToOrder(order.Id, item);
+
+            // Act
+            orderService.RemoveItem(order.Id, item);
+            var real = orderService.GetOrder(order.Id);
+
+            // Assert
+            Assert.Equal(real.GetTotalCost(), order.GetTotalCost());
+            Assert.DoesNotContain(item, real.Items);
+            Assert.DoesNotContain(item, order.Items);
         }
     }
 }
