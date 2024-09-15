@@ -18,10 +18,9 @@ namespace JSONService
             };
         }
         JSONDatabase<Food> database;
-        UnityContainer _container;
-        public FoodService(UnityContainer container, string JSONpath = "food.json")
+
+        public FoodService(string JSONpath = "food.json")
         {
-            _container = container;
             database = new JSONDatabase<Food>(JSONpath);
         }
 

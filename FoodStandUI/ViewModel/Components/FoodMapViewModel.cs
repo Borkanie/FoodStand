@@ -30,19 +30,12 @@ namespace FoodStandUI.ViewModel.Components
 
         public ContainerViewModel Get(int line, int column)
         {
-            var item = Model.Get(line, column);
-            if(item is null)
-                return new ContainerViewModel();
-            else
-                return new ContainerViewModel(item);
+            return new ContainerViewModel(Model.Get(line, column));
         }
 
         public ContainerViewModel Get(FoodMeasuringObjects.Telemetry.Location location)
         {
-            if (Model.Get(location) is not null)
-                return new ContainerViewModel(Model.Get(location));
-            else
-                return new ContainerViewModel();
+            return new ContainerViewModel(Model.Get(location));
         }
 
         public int ElementsOnLine()

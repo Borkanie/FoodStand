@@ -16,14 +16,9 @@ namespace FoodStandUI.ViewModel.Components
     {
         FoodContainer model;
 
-        public ContainerViewModel()
-        {
-            
-        }
-
         public ContainerViewModel(FoodContainer model)
         {
-            this.model = model;
+            Model = model;
         }
 
         public FoodContainer Model
@@ -31,7 +26,7 @@ namespace FoodStandUI.ViewModel.Components
             get => model;
             set
             {
-                if(model != value)
+                if(model is null || model != value)
                 {
                     model = value;
                     RaisePropertyChanged(nameof(Model));
