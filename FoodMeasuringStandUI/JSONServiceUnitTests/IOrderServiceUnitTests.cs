@@ -59,6 +59,7 @@ namespace JSONServiceUnitTests
             order.Items.Add(item);
             orderService.AddItemToOrder(order1.Id, item);
             order1 = orderService.GetOrder(order1.Id);
+            Assert.NotNull(order1);
 
             // Assert
             Assert.True(order.GetTotalCost() == order1.GetTotalCost());

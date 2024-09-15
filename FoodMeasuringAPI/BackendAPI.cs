@@ -25,17 +25,14 @@ namespace FoodMeasuringAPI
         private BackendAPI() 
         {
             _container = new UnityContainer();
-            _container.RegisterType<ISensorReadingService, SensorMockingService>(
-                new ContainerControlledLifetimeManager());
             _container.RegisterType<ILocalizationService, LocalizationService>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(_container));
+                new ContainerControlledLifetimeManager());
             _container.RegisterType<IFoodService, FoodService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] { _container, "food.json"}));
+                new InjectionConstructor(new object[] { "debugFood.json"}));
             _container.RegisterType<IOrderService, OrderService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] {_container, "confirmedOrders.json" }));
+                new InjectionConstructor(new object[] {"debugActive.json", "debugCache.json" }));
         }
 
         public UnityContainer Container

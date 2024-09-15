@@ -12,12 +12,10 @@ namespace JSONService
 {
     public class OrderService : IOrderService
     {
-        UnityContainer _container;
         JSONDatabase<Order> _confirmedOrders;
         JSONDatabase<Order> _activeOrders;
-        public OrderService(UnityContainer container, string path = "_confirmedOrders.json", string tempCach = "orderCache.json")
+        public OrderService(string path = "_confirmedOrders.json", string tempCach = "orderCache.json")
         {
-            _container = container;
             _confirmedOrders = new JSONDatabase<Order>(path);
             _activeOrders = new JSONDatabase<Order>(tempCach);
         }
