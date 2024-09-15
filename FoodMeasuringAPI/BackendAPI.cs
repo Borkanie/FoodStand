@@ -20,7 +20,7 @@ namespace FoodMeasuringAPI
     public class BackendAPI
     {
         private UnityContainer _container;
-        private static BackendAPI instance;
+        private static BackendAPI? instance;
         
         private BackendAPI() 
         {
@@ -35,7 +35,7 @@ namespace FoodMeasuringAPI
                 new InjectionConstructor(new object[] { _container, "food.json"}));
             _container.RegisterType<IOrderService, OrderService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] {_container, "confirmedOrders.json" })); 
+                new InjectionConstructor(new object[] {_container, "confirmedOrders.json" }));
         }
 
         public UnityContainer Container

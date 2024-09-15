@@ -153,9 +153,9 @@ namespace JSONServiceUnitTests
             var service = _container.Resolve<IFoodService>();
             service.RegisterFood(testName + "qqq123123");
             var food = service.RegisterFood(testName);
+            Assert.NotNull(food);
             service.RegisterFood(testName+"qqq");
-
-
+            
             // Act
             service.DeleteFood(food);
 
@@ -185,6 +185,7 @@ namespace JSONServiceUnitTests
             var testName = "Test Register";
             var service = _container.Resolve<IFoodService>();
             var food = service.RegisterFood(testName);
+            Assert.NotNull(food);
 
             // Act
             var deleted = service.DeleteFood(food);
@@ -203,6 +204,7 @@ namespace JSONServiceUnitTests
             var testName = "Test Register";
             var service = _container.Resolve<IFoodService>();
             var food = service.RegisterFood(testName);
+            Assert.NotNull(food);
 
             // Act
             food.Description += "qqq";

@@ -15,7 +15,7 @@ namespace JSONService
     /// <inheritdoc/>
     public class LocalizationService : ILocalizationService
     {
-        private FoodMap _foodMap;
+        private FoodMap? _foodMap;
         private UnityContainer _container;
 
         public LocalizationService(UnityContainer serviceContainer)
@@ -29,7 +29,7 @@ namespace JSONService
             get{
                 if(_foodMap is null)
                     ResetFoodMap();
-                return _foodMap;
+                return _foodMap!;
             }
         }
 
@@ -90,7 +90,7 @@ namespace JSONService
                 for (int column = 0; column < FoodMap.ElementsOnColumn; column++)
                 {
                     var food = oldFoodMap.Get(line, column);
-                    if(food is null)
+                    if(food is not null)
                     {
                         FoodMap.AddFood(food.Food, new Location() { Column = column, Line = line });
                     }

@@ -88,7 +88,7 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Order? StartNewOrder()
+        public Order StartNewOrder()
         {
             var order = new Order();
             if (_activeOrders.Add(order))
@@ -98,7 +98,10 @@ namespace JSONService
                     Id = order.Id,
                 };
             }
-            return null;
+            else
+            {
+                throw new Exception("Order cannot bee started.");
+            }
         }
 
         /// <inheritdoc/>

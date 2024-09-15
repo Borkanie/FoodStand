@@ -9,9 +9,12 @@ namespace FoodMeasuringObjects.Orders
 {
     public class Item
     {
+        public Guid Id { get; set; }
+
         public Item(Food food)
         {
             Food = food;
+            Id = Guid.NewGuid();
         }
 
         public Food Food { get; set; } 
@@ -49,6 +52,11 @@ namespace FoodMeasuringObjects.Orders
         public static bool operator !=(Item left, Item right)
         {
             return !left.Equals(right);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

@@ -56,5 +56,10 @@ namespace FoodMeasuringObjects.Foods
         {
             return !left.Equals(right);
         }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

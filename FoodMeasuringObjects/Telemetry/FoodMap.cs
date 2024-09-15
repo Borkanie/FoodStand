@@ -155,5 +155,18 @@ namespace FoodMeasuringObjects.Telemetry
 
             return map;
         }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 0;
+            for(int i=0; i < ElementsOnLine; i++)
+            {
+                for(int j=0; j < ElementsOnColumn; j++)
+                {
+                    hashCode += itemTable[i, j].GetHashCode();
+                }
+            }
+            return hashCode;
+        }
     }
 }
