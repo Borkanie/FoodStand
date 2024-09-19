@@ -9,10 +9,33 @@ namespace FoodStandUI.ViewModel.Components
 {
     internal class MainWindowViewModel : BaseViewModel
     {
-        public FoodMapViewModel FoodMap
-        {
-            get;
-            set;
+        public override double Heigth 
+        { 
+            get => base.Heigth;
+            set
+            {
+                if (base.Heigth != value) {
+                    base.Heigth = value;
+                    FoodMap.Heigth = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
+
+        public override double Width
+        {
+            get => base.Width;
+            set
+            {
+                if (base.Width != value)
+                {
+                    base.Width = value;
+                    FoodMap.Width = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public FoodMapViewModel FoodMap{  get; set;  } = new FoodMapViewModel();
     }
 }

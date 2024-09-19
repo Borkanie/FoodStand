@@ -10,6 +10,40 @@ namespace FoodStandUI.ViewModel.Basic
 {
     internal class BaseViewModel : INotifyPropertyChanged
     {
+        private double width = 150;
+        private double heigth = 150;
+
+        public virtual double Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                if (value != width)
+                {
+                    width = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public virtual double Heigth
+        {
+            get
+            {
+                return heigth;
+            }
+            set
+            {
+                if (value != heigth)
+                {
+                    heigth = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string caller = "")

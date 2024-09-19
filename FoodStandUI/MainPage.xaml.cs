@@ -5,31 +5,19 @@ namespace FoodStandUI
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
+        MainWindowViewModel VM;
         public MainPage()
         {
-            FoodMap = new FoodMapViewModel();
             InitializeComponent();
+            Loaded += OnLoaded;
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void OnLoaded(object sender, EventArgs e)
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
-
-
-        internal FoodMapViewModel FoodMap
-        {
-            get;
-            set;
+            VM = new MainWindowViewModel();
+            VM.Width = this.Width;
+            VM.Heigth = this.Height;
+            BindingContext = VM;
         }
     }
 

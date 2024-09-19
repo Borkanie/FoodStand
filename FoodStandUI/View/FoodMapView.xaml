@@ -8,27 +8,28 @@
     <ContentView.BindingContext>
         <local:FoodMapViewModel/>
     </ContentView.BindingContext>
-    
+
     <ContentView.Resources>
         <!-- Define DataTemplate for floating containers -->
         <DataTemplate x:Key="FloatingContainerTemplate">
             <Frame Padding="0" HasShadow="True" CornerRadius="10" Margin="10"
-                   HeightRequest="150" WidthRequest="150">
+                   HeightRequest="{Binding Heigth}" WidthRequest="{Binding Width}">
                 <Frame.Shadow>
                     <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.5"/>
                 </Frame.Shadow>
-
                 <!-- The layout of each container -->
                 <Grid>
                     <!-- Background image 
                     <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
-
                     <!-- StackPanel for name and description -->
-                    <StackLayout VerticalOptions="End" Padding="10" BackgroundColor="#80000000">
+                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                                 Padding="10" BackgroundColor="#80000000">
                         <!-- Name -->
-                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Food.Name}" FontSize="16" FontAttributes="Bold" 
+                               TextColor="White" HorizontalOptions="Center" VerticalOptions="StartAndExpand"/>
                         <!-- Description -->
-                        <Label Text="{Binding Description}" FontSize="12" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Food.Description}" FontSize="12" 
+                               TextColor="White" HorizontalOptions="Center" VerticalOptions="End"/>
                     </StackLayout>
                 </Grid>
             </Frame>
@@ -36,12 +37,14 @@
     </ContentView.Resources>
 
     <ContentView.Content>
-        <!-- ListView or CollectionView to display the floating containers -->
-        <CollectionView ItemsSource="{Binding ItemList}" 
-                    ItemTemplate="{StaticResource FloatingContainerTemplate}">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Horizontal" Span="4"/>
-            </CollectionView.ItemsLayout>
-        </CollectionView>
+        <ScrollView WidthRequest="{Binding Width,Mode=TwoWay}" HeightRequest="{Binding Heigth,Mode=TwoWay}">
+            <!-- ListView or CollectionView to display the floating containers -->
+            <CollectionView ItemsSource="{Binding ItemList}" 
+                            ItemTemplate="{StaticResource FloatingContainerTemplate}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" Span="4"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </ScrollView>
     </ContentView.Content>
 </ContentView>

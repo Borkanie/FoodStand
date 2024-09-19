@@ -20,7 +20,6 @@ namespace FoodStandUI.ViewModel.Components
         {
             Model = model;
         }
-
         public FoodContainer Model
         {
             get => model;
