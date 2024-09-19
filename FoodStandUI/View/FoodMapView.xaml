@@ -12,39 +12,51 @@
     <ContentView.Resources>
         <!-- Define DataTemplate for floating containers -->
         <DataTemplate x:Key="FloatingContainerTemplate">
-            <Frame Padding="0" HasShadow="True" CornerRadius="10" Margin="10"
-                   HeightRequest="{Binding Heigth}" WidthRequest="{Binding Width}">
-                <Frame.Shadow>
-                    <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.5"/>
-                </Frame.Shadow>
-                <!-- The layout of each container -->
-                <Grid>
-                    <!-- Background image 
-                    <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
-                    <!-- StackPanel for name and description -->
-                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
-                                 Padding="10" BackgroundColor="#80000000">
-                        <!-- Name -->
-                        <Label Text="{Binding Food.Name}" FontSize="16" FontAttributes="Bold" 
-                               TextColor="White" HorizontalOptions="Center" VerticalOptions="StartAndExpand"/>
-                        <!-- Description -->
-                        <Label Text="{Binding Food.Description}" FontSize="12" 
-                               TextColor="White" HorizontalOptions="Center" VerticalOptions="End"/>
-                    </StackLayout>
-                </Grid>
-            </Frame>
+            <Grid>
+                <Frame Padding="0" HasShadow="True" CornerRadius="10" Margin="10"
+        HeightRequest="{Binding Heigth, Mode=TwoWay}" WidthRequest="{Binding Width, Mode=TwoWay}">
+                    <Frame.Shadow>
+                        <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.8"/>
+                    </Frame.Shadow>
+                    <!-- The layout of each container -->
+                    <Grid>
+                        <!-- Background image 
+         <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
+                        <!-- StackPanel for name and description -->
+                        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                                 BackgroundColor="#80000000">
+                            <!-- Name -->
+                            <Label FontSize="{Binding FontSizeTitle}" Text="{Binding Food.Name}" FontAttributes="Bold" 
+                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Available: "  FontSize="{Binding FontSizeDescription}" Grid.Column="0" HorizontalOptions="End"></Label>
+                                <Label Text="{Binding Quantity}" Grid.Column="1" FontSize="{Binding FontSizeDescription}" HorizontalOptions="Start"/>
+                            </Grid>
+                            <!-- Description -->
+                            <Label Text="{Binding Food.Description}" FontSize="{Binding FontSizeDescription}" 
+                     TextColor="White" HorizontalOptions="Center" VerticalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
         </DataTemplate>
     </ContentView.Resources>
 
-    <ContentView.Content>
-        <ScrollView WidthRequest="{Binding Width,Mode=TwoWay}" HeightRequest="{Binding Heigth,Mode=TwoWay}">
-            <!-- ListView or CollectionView to display the floating containers -->
-            <CollectionView ItemsSource="{Binding ItemList}" 
-                            ItemTemplate="{StaticResource FloatingContainerTemplate}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="{Binding ElementsOnLine}"/>
-                </CollectionView.ItemsLayout>
-            </CollectionView>
-        </ScrollView>
+    <ContentView.Content >
+        <Grid Padding="10">
+            <ScrollView WidthRequest="{Binding Width,Mode=TwoWay}" HeightRequest="{Binding Heigth,Mode=TwoWay}">
+                <!-- ListView or CollectionView to display the floating containers -->
+                <CollectionView ItemsSource="{Binding ItemList}" 
+                    ItemTemplate="{StaticResource FloatingContainerTemplate}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding ElementsOnLine}"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </ScrollView>
+        </Grid>
     </ContentView.Content>
 </ContentView>

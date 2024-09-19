@@ -10,8 +10,8 @@ namespace FoodStandUI.ViewModel.Basic
 {
     internal class BaseViewModel : INotifyPropertyChanged
     {
-        private double width = 150;
-        private double heigth = 150;
+        protected double width = 150;
+        protected double heigth = 150;
 
         public virtual double Width
         {
