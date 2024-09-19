@@ -42,7 +42,7 @@
             <CollectionView ItemsSource="{Binding ItemList}" 
                             ItemTemplate="{StaticResource FloatingContainerTemplate}">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Horizontal" Span="4"/>
+                    <GridItemsLayout Orientation="Vertical" Span="{Binding ElementsOnLine}"/>
                 </CollectionView.ItemsLayout>
             </CollectionView>
         </ScrollView>

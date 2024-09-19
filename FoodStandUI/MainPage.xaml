@@ -9,12 +9,9 @@
         <StaticResource Key="PurpleRadialGradientBrush" />
     </ContentPage.Background>
     
-    <ScrollView WidthRequest="{Binding Width, Mode=TwoWay}" HeightRequest="{Binding Heigth, Mode=TwoWay}">
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <views:FoodMapView BindingContext="{Binding FoodMap}"/>            
-        </VerticalStackLayout>
-    </ScrollView>
+    <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"> 
+        <views:FoodMapView BindingContext="{Binding FoodMap}"
+                           WidthRequest="{Binding Width, Mode=TwoWay}" HeightRequest="{Binding Heigth, Mode=TwoWay}"/>
+    </Grid>
 
 </ContentPage>

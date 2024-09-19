@@ -27,6 +27,11 @@ namespace FoodStandUI.ViewModel.Components
             }
         }
 
+        public int ElementsOnLine
+        {
+            get => model.ElementsOnLine;
+        }
+
         public override double Heigth
         {
             get => base.Heigth;
@@ -88,16 +93,6 @@ namespace FoodStandUI.ViewModel.Components
         public ContainerViewModel Get(FoodMeasuringObjects.Telemetry.Location location)
         {
             return new ContainerViewModel(Model.Get(location));
-        }
-
-        public int ElementsOnLine()
-        {
-            return Model.ElementsOnLine;
-        }
-
-        public int ElementsOnColumn()
-        {
-            return Model.ElementsOnColumn;
         }
 
         public void AddFood(Food food, FoodMeasuringObjects.Telemetry.Location targetLocation)
