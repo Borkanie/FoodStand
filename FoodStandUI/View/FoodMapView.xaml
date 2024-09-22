@@ -21,24 +21,41 @@
                     <!-- The layout of each container -->
                     <Grid>
                         <!-- Background image 
-         <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
+                        <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
                         <!-- StackPanel for name and description -->
                         <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
                                  BackgroundColor="#80000000">
                             <!-- Name -->
-                            <Label FontSize="{Binding FontSizeTitle}" Text="{Binding Food.Name}" FontAttributes="Bold" 
-                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="Available: "  FontSize="{Binding FontSizeDescription}" Grid.Column="0" HorizontalOptions="End"></Label>
-                                <Label Text="{Binding Quantity}" Grid.Column="1" FontSize="{Binding FontSizeDescription}" HorizontalOptions="Start"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Label FontSize="{Binding FontSizeTitle}" Grid.Column="0" Grid.ColumnSpan="6" 
+                                       Grid.Row="0" Grid.RowSpan="3" Text="{Binding Food.Name}" FontAttributes="Bold" 
+                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10"/>
+                                <ImageButton x:Name="SettingsButton" Source="settings.png" Grid.Row="0"
+                                             Grid.Column="5" Background="Transparent" Command="{Binding Path=OnSettingsCLicked}"/>
+
+                                <Label Text="Available: "  FontSize="{Binding FontSizeDescription}" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="End"></Label>
+                                <Label Text="{Binding Quantity}" Grid.Column="3" Grid.ColumnSpan="3" FontSize="{Binding FontSizeDescription}" HorizontalOptions="Start"/>
+
+                                <!-- Description -->
+                                <Label Text="{Binding Food.Description}" FontSize="{Binding FontSizeDescription}" 
+                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="End"/>
                             </Grid>
-                            <!-- Description -->
-                            <Label Text="{Binding Food.Description}" FontSize="{Binding FontSizeDescription}" 
-                     TextColor="White" HorizontalOptions="Center" VerticalOptions="End"/>
                         </StackLayout>
                     </Grid>
                 </Frame>

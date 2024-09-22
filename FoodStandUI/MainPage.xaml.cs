@@ -1,4 +1,6 @@
 ﻿using FoodMeasuringAPI;
+using FoodStandUI.Resources;
+using FoodStandUI.View.Dialog;
 using FoodStandUI.ViewModel.Components;
 
 namespace FoodStandUI
@@ -11,6 +13,13 @@ namespace FoodStandUI
             InitializeComponent();
             Loaded += OnLoaded;
             SizeChanged += MainPage_SizeChanged;
+            MessagingCenter.Subscribe<ContainerViewModel>(this, MessageType.ContainerSettingsButtonClicked.Value, x => CreateContainerSettingsView(x));
+        }
+
+        private void CreateContainerSettingsView(ContainerViewModel vm)
+        {
+            var containerSettingsView = new ContianerSettingsView();
+            containerSettingsView.DataContext = vm;
         }
 
         private void MainPage_SizeChanged(object? sender, EventArgs e)

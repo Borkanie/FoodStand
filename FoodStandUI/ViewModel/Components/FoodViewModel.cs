@@ -1,19 +1,30 @@
 ﻿using FoodMeasuringAPI;
 using FoodMeasuringObjects.Foods;
 using FoodStandUI.ViewModel.Basic;
-using Services;
+using FoodMeasuringObjects.Telemetry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity;
+using Services;
 
 namespace FoodStandUI.ViewModel.Components
 {
     internal class FoodViewModel :  BaseViewModel
     {
         Food model;
+
+        public FoodViewModel(Food model)
+        {
+            this.model = model;
+        }
+
+        public void AddToLocation(FoodMeasuringObjects.Telemetry.Location location)
+        {
+            BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(model, location);
+        }
 
         public string Name
         {

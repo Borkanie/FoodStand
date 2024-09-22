@@ -1,6 +1,7 @@
 ﻿using FoodMeasuringAPI;
 using FoodMeasuringObjects.Foods;
 using FoodMeasuringObjects.Orders;
+using FoodStandUI.Resources;
 using FoodStandUI.ViewModel.Basic;
 using Services;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Unity;
 
 namespace FoodStandUI.ViewModel.Components
@@ -19,10 +21,23 @@ namespace FoodStandUI.ViewModel.Components
         private double _fontSizeDescription;
         private readonly double minTitleSize = 10;
         private readonly double minDescriptionSize = 10;
+        private FoodViewModel _food;
+
+        private void OnSettingsCLicked()
+        {
+            MessagingCenter.Send(Food, MessageType.ContainerSettingsButtonClicked.Value);
+        }
+
         public ContainerViewModel(FoodContainer model)
         {
             Model = model;
+            _food = new FoodViewModel(model.Food);
+            Command = new Command(() => OnSettingsCLicked());
         }
+
+
+        public ICommand Command { get; private set; }
+
         public FoodContainer Model
         {
             get => model;
@@ -36,19 +51,19 @@ namespace FoodStandUI.ViewModel.Components
             }
         }
 
-        public Food Food
+        public FoodViewModel Food
         {
             get
             {
-                return model.Food;
+                return _food;
             }
             set
             {
-                if (model.Food != value)
+                if (_food != value)
                 {
-                    model.Food = value;
-                    BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(value, model.Location);
-                    this.RaisePropertyChanged();
+                    _food = value;
+                    _food.AddToLocation(model.Location);
+                    RaisePropertyChanged();
                 }
             }
         }

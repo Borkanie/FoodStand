@@ -57,6 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\settings.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -71,6 +75,9 @@
 	  <Compile Update="View\Components\FoodListitemView.xaml.cs">
 	    <DependentUpon>FoodListitemView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\Settings\FoodSettingsDialog.xaml.cs">
+	    <DependentUpon>FoodSettingsDialog.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\OrderManagementView.xaml.cs">
 	    <DependentUpon>OrderManagementView.xaml</DependentUpon>
 	  </Compile>
@@ -84,6 +91,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Components\OrderView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Settings\ContianerSettingsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Settings\FoodSettingsDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\FoodMapView.xaml">
