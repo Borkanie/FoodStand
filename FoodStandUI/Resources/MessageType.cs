@@ -13,7 +13,9 @@ namespace FoodStandUI.Resources
         public string Value { get; private set; }
 
         public static MessageType ContainerSettingsButtonClicked { get { return new MessageType("ContainerSettingsButtonClicked"); } }
-        
+        public static MessageType CloseContainerSettingsView { get { return new MessageType("ContainerSettingsButtonClicked"); } }
+        public static MessageType SaveContainerSettingsView { get { return new MessageType("ContainerSettingsButtonClicked"); } }
+
         public override int GetHashCode()
         {
             return Value.GetHashCode();

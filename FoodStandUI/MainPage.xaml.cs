@@ -19,7 +19,7 @@ namespace FoodStandUI
         private void CreateContainerSettingsView(ContainerViewModel vm)
         {
             var containerSettingsView = new ContianerSettingsView();
-            containerSettingsView.DataContext = vm;
+            containerSettingsView.BindingContext = vm;
         }
 
         private void MainPage_SizeChanged(object? sender, EventArgs e)

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity;
 using Services;
+using System.Windows.Input;
 
 namespace FoodStandUI.ViewModel.Components
 {
@@ -25,6 +26,11 @@ namespace FoodStandUI.ViewModel.Components
         {
             BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(model, location);
         }
+
+        public ICommand CloseCommand { get; internal set; }
+
+        public ICommand SaveCommand { get; internal set; }
+
 
         public string Name
         {

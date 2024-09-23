@@ -28,13 +28,17 @@ namespace FoodStandUI.ViewModel.Components
             MessagingCenter.Send(Food, MessageType.ContainerSettingsButtonClicked.Value);
         }
 
+        public bool UpdateModel()
+        {
+            return true;
+        }
+
         public ContainerViewModel(FoodContainer model)
         {
             Model = model;
             _food = new FoodViewModel(model.Food);
             Command = new Command(() => OnSettingsCLicked());
         }
-
 
         public ICommand Command { get; private set; }
 
@@ -159,6 +163,32 @@ namespace FoodStandUI.ViewModel.Components
                 {
                     model.Type = value;
                     this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int Line
+        {
+            get => model.Location.Line;
+            set
+            {
+                if(model.Location.Line != value)
+                {
+                    model.Location.Line = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int Column
+        {
+            get => model.Location.Column;
+            set
+            {
+                if (model.Location.Column != value)
+                {
+                    model.Location.Column = value;
+                    RaisePropertyChanged();
                 }
             }
         }
