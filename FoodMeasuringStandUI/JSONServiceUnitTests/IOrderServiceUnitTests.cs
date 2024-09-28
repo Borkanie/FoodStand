@@ -209,6 +209,7 @@ namespace JSONServiceUnitTests
             // Act
             order.Items.Add(item);
             var real = orderService.GetOrder(order.Id);
+            Assert.NotNull(real);
 
             // Assert
             Assert.NotEqual(real.GetTotalCost(), order.GetTotalCost());

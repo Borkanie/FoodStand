@@ -1,4 +1,6 @@
+using CommunityToolkit.Mvvm.Messaging;
 using FoodStandUI.Resources;
+using FoodStandUI.Resources.Messages;
 using FoodStandUI.ViewModel.Components;
 
 namespace FoodStandUI.View.Dialog;
@@ -18,7 +20,7 @@ public partial class ContianerSettingsView : ContentView
 
 	internal void CancelButton_Clicked(object sender, EventArgs e)
 	{
-		MessagingCenter.Send(this, MessageType.CloseContainerSettingsView.Value);
+        WeakReferenceMessenger.Default.Send(new ContainerSettingsViewMessage(this, ContainerSettingsViewMessage.Action.CancelSettings));
 	}
 
     internal void SaveButton_Clicked(object sender, EventArgs e)
@@ -26,7 +28,7 @@ public partial class ContianerSettingsView : ContentView
 		if(BindingContext is not null)
 		{
 		((ContainerViewModel)BindingContext).UpdateModel();
-        MessagingCenter.Send(this, MessageType.SaveContainerSettingsView.Value);
-		}
+			WeakReferenceMessenger.Default.Send(new ContainerSettingsViewMessage(this, ContainerSettingsViewMessage.Action.SaveSettings));
+        }
     }
 }

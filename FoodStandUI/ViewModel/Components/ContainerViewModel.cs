@@ -11,6 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Unity;
+using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.Messaging;
+using FoodStandUI.Resources.Messages;
 
 namespace FoodStandUI.ViewModel.Components
 {
@@ -23,11 +26,6 @@ namespace FoodStandUI.ViewModel.Components
         private readonly double minDescriptionSize = 10;
         private FoodViewModel _food;
 
-        private void OnSettingsCLicked()
-        {
-            MessagingCenter.Send(Food, MessageType.ContainerSettingsButtonClicked.Value);
-        }
-
         public bool UpdateModel()
         {
             return true;
@@ -37,10 +35,10 @@ namespace FoodStandUI.ViewModel.Components
         {
             Model = model;
             _food = new FoodViewModel(model.Food);
-            Command = new Command(() => OnSettingsCLicked());
+            OnSettingsCLicked = new Command(() => WeakReferenceMessenger.Default.Send(new ContainerViewModelMessage(this, ContainerViewModelMessage.Action.OpenSettings)));
         }
 
-        public ICommand Command { get; private set; }
+        public ICommand OnSettingsCLicked { get; private set; }
 
         public FoodContainer Model
         {

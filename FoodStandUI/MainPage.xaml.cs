@@ -1,5 +1,7 @@
-﻿using FoodMeasuringAPI;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using FoodMeasuringAPI;
 using FoodStandUI.Resources;
+using FoodStandUI.Resources.Messages;
 using FoodStandUI.View.Dialog;
 using FoodStandUI.ViewModel.Components;
 
@@ -13,7 +15,36 @@ namespace FoodStandUI
             InitializeComponent();
             Loaded += OnLoaded;
             SizeChanged += MainPage_SizeChanged;
-            MessagingCenter.Subscribe<ContainerViewModel>(this, MessageType.ContainerSettingsButtonClicked.Value, x => CreateContainerSettingsView(x));
+            WeakReferenceMessenger.Default.Register<MainPage, ContainerViewModelMessage>(this, static (r, msg) => r.ReadMessageFromContainerVM(msg));
+            WeakReferenceMessenger.Default.Register<MainPage, ContainerSettingsViewMessage>(this, static (r, msg) => r.ReadMessageFromContainerSettingsView(msg));
+            //WeakReferenceMessenger.Default.Register<ContainerViewModel>(this, MessageType.ContainerSettingsButtonClicked.Value, x => CreateContainerSettingsView(x));
+        }
+
+        private void ReadMessageFromContainerSettingsView(ContainerSettingsViewMessage message)
+        {
+            switch (message.Type)
+            {
+                case ContainerSettingsViewMessage.Action.SaveSettings:
+                    //CreateContainerSettingsView(message.View);
+                    break;
+                case ContainerSettingsViewMessage.Action.CancelSettings:
+                    //CreateContainerSettingsView(message.View);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ReadMessageFromContainerVM(ContainerViewModelMessage message)
+        {
+            switch (message.Type)
+            {
+                case ContainerViewModelMessage.Action.OpenSettings:
+                        CreateContainerSettingsView(message.ViewModel);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void CreateContainerSettingsView(ContainerViewModel vm)
