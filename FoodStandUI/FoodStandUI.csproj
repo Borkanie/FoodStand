@@ -79,9 +79,6 @@
 	  <Compile Update="View\Components\FoodListitemView.xaml.cs">
 	    <DependentUpon>FoodListitemView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\Dialog\FoodSettingsDialog.xaml.cs">
-	    <DependentUpon>FoodSettingsDialog.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="View\OrderManagementView.xaml.cs">
 	    <DependentUpon>OrderManagementView.xaml</DependentUpon>
 	  </Compile>
@@ -98,9 +95,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Dialog\ContianerSettingsView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\Dialog\FoodSettingsDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\FoodMapView.xaml">

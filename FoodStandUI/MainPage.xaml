@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodStandUI.MainPage"
              xmlns:views="clr-namespace:FoodStandUI.View"
+             xmlns:dailogs="clr-namespace:FoodStandUI.View.Dialog"
              x:Name="MainView">
     <ContentPage.Background>
         <!-- Reuse the PurpleRadialGradientBrush defined in App.xaml -->
@@ -12,6 +13,31 @@
     <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"> 
         <views:FoodMapView BindingContext="{Binding FoodMap}"
                            WidthRequest="{Binding Width, Mode=TwoWay}" HeightRequest="{Binding Heigth, Mode=TwoWay}"/>
+        
+        <!-- The Overlay that will show the dark haze and settings view -->
+        <Grid x:Name="Overlay" BackgroundColor="Black" Opacity="0.8" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <!-- The Container Settings View -->
+            <ContentView BackgroundColor="White" Grid.Row="1" Grid.Column="1">
+                <!-- Example of settings content -->
+                <StackLayout>
+                    <dailogs:ContianerSettingsView x:Name="ContainerSettingsView"/>
+                </StackLayout>
+            </ContentView>
+
+        </Grid>
     </Grid>
 
 </ContentPage>

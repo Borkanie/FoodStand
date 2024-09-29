@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FoodStandUI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace FoodStandUI
 {
@@ -7,6 +8,7 @@ namespace FoodStandUI
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+            builder.Services.AddSingleton<IAlertService, AlertService>();
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>

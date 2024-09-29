@@ -22,15 +22,15 @@ namespace FoodStandUI.ViewModel.Components
             this.model = model;
         }
 
-        public void AddToLocation(FoodMeasuringObjects.Telemetry.Location location)
+        public bool AddToLocation(FoodMeasuringObjects.Telemetry.Location location)
         {
-            BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(model, location);
+            return BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(model, location);
         }
-
-        public ICommand CloseCommand { get; internal set; }
-
-        public ICommand SaveCommand { get; internal set; }
-
+        
+        public bool UpdateModel()
+        {
+            return BackendAPI.FoodService.Update(model);
+        }
 
         public string Name
         {
@@ -41,10 +41,8 @@ namespace FoodStandUI.ViewModel.Components
 
             set
             {
-                var old = BackendAPI.FoodService.Get(model.Name);
-                if (old is not null && BackendAPI.FoodService.UpdateName(old,value))
+                if (value != model.Name)
                 {
-                    model = old;
                     model.Name = value;
                     RaisePropertyChanged();
                 }
@@ -60,13 +58,12 @@ namespace FoodStandUI.ViewModel.Components
 
             set
             {
-                Food newModel = model;
-                newModel.Description = value;
-                if (BackendAPI.FoodService.Update(newModel))
+                if (value != model.Description)
                 {
                     model.Description = value;
                     RaisePropertyChanged();
                 }
+                
             }
         }
 
@@ -79,15 +76,15 @@ namespace FoodStandUI.ViewModel.Components
 
             set
             {
-                Food newModel = model;
-                newModel.WheigthPerPortion = value;
-                if (BackendAPI.FoodService.Update(newModel))
+                if(value != model.WheigthPerPortion)
                 {
-                    model.WheigthPerPortion = value;
-                    RaisePropertyChanged();
+                     model.WheigthPerPortion = value;
+                     RaisePropertyChanged();
                 }
+                
             }
         }
+
         public int Price
         {
             get
@@ -97,12 +94,10 @@ namespace FoodStandUI.ViewModel.Components
 
             set
             {
-                Food newModel = model;
-                newModel.Price = value;
-                if (BackendAPI.FoodService.Update(newModel))
+                if(value != model.Price)
                 {
                     model.Price = value;
-                    RaisePropertyChanged();
+                    RaisePropertyChanged();   
                 }
             }
         }

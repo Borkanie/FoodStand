@@ -24,11 +24,8 @@ namespace FoodStandUI
         {
             switch (message.Type)
             {
-                case ContainerSettingsViewMessage.Action.SaveSettings:
-                    //CreateContainerSettingsView(message.View);
-                    break;
                 case ContainerSettingsViewMessage.Action.CancelSettings:
-                    //CreateContainerSettingsView(message.View);
+                    Overlay.IsVisible = false;
                     break;
                 default:
                     break;
@@ -40,17 +37,12 @@ namespace FoodStandUI
             switch (message.Type)
             {
                 case ContainerViewModelMessage.Action.OpenSettings:
-                        CreateContainerSettingsView(message.ViewModel);
+                    ContainerSettingsView.BindingContext = message.ViewModel;
+                    Overlay.IsVisible = true;
                     break;
                 default:
                     break;
             }
-        }
-
-        private void CreateContainerSettingsView(ContainerViewModel vm)
-        {
-            var containerSettingsView = new ContianerSettingsView();
-            containerSettingsView.BindingContext = vm;
         }
 
         private void MainPage_SizeChanged(object? sender, EventArgs e)

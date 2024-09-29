@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodStandUI", "..\FoodStand
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{B63972D4-A441-4336-8FF5-FDC3ACDD4E99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceUnitTests", "JSONServiceUnitTests\ServiceUnitTests.csproj", "{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceUnitTests", "JSONServiceUnitTests\ServiceUnitTests.csproj", "{BF77D27C-DF2E-4CFA-9CBC-EBE49E357340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

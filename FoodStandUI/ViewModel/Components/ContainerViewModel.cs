@@ -14,6 +14,7 @@ using Unity;
 using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.Messaging;
 using FoodStandUI.Resources.Messages;
+using System.ComponentModel;
 
 namespace FoodStandUI.ViewModel.Components
 {
@@ -25,17 +26,38 @@ namespace FoodStandUI.ViewModel.Components
         private readonly double minTitleSize = 10;
         private readonly double minDescriptionSize = 10;
         private FoodViewModel _food;
-
-        public bool UpdateModel()
-        {
-            return true;
-        }
+        private bool isFoodSettingsVisible;
 
         public ContainerViewModel(FoodContainer model)
         {
             Model = model;
             _food = new FoodViewModel(model.Food);
             OnSettingsCLicked = new Command(() => WeakReferenceMessenger.Default.Send(new ContainerViewModelMessage(this, ContainerViewModelMessage.Action.OpenSettings)));
+            Button1Command = new Command(ToggleVisibility);
+            Button2Command = new Command(ToggleVisibility);
+
+        }
+
+        #region switching
+
+        public ICommand Button1Command { get; }
+        public ICommand Button2Command { get; }
+
+        public double Button1Opacity => isFoodSettingsVisible ? 1 : 0;
+        public double Button2Opacity => isFoodSettingsVisible ? 0 : 1;
+
+        private void ToggleVisibility()
+        {
+            isFoodSettingsVisible = !isFoodSettingsVisible;
+            RaisePropertyChanged(nameof(Button1Opacity));
+            RaisePropertyChanged(nameof(Button2Opacity));
+        }
+
+        #endregion
+
+        public bool UpdateModel()
+        {
+            return true;
         }
 
         public ICommand OnSettingsCLicked { get; private set; }
