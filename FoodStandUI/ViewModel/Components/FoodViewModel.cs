@@ -16,10 +16,12 @@ namespace FoodStandUI.ViewModel.Components
     internal class FoodViewModel :  BaseViewModel
     {
         Food model;
+        private string name;
 
         public FoodViewModel(Food model)
         {
             this.model = model;
+            name = model.Name;
         }
 
         public bool AddToLocation(FoodMeasuringObjects.Telemetry.Location location)
@@ -29,21 +31,26 @@ namespace FoodStandUI.ViewModel.Components
         
         public bool UpdateModel()
         {
-            return BackendAPI.FoodService.Update(model);
+            if(BackendAPI.FoodService.UpdateName(model,name))
+            {
+                model.Name = name;
+                return BackendAPI.FoodService.Update(model);
+            }
+            return false;
         }
 
         public string Name
         {
             get
             {
-                return model.Name;
+                return name;
             }
 
             set
             {
-                if (value != model.Name)
+                if (value != name)
                 {
-                    model.Name = value;
+                    name = value;
                     RaisePropertyChanged();
                 }
             }

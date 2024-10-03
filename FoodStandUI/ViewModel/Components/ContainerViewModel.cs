@@ -57,7 +57,7 @@ namespace FoodStandUI.ViewModel.Components
 
         public bool UpdateModel()
         {
-            return true;
+            return Food.UpdateModel() && BackendAPI.LocalizationService.AddFood(model.Food, model.Location);
         }
 
         public ICommand OnSettingsCLicked { get; private set; }
