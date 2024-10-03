@@ -4,10 +4,6 @@
              x:Class="FoodStandUI.View.Components.ItemView"
              xmlns:local="clr-namespace:FoodStandUI.ViewModel.Components"
              xmlns:ui="clr-namespace:FoodStandUI.View.Components">
-    <ContentView.BindingContext>
-        <local:ItemViewModel/>
-    </ContentView.BindingContext>
-    
     <VerticalStackLayout>
         <ui:FoodView BindingContext="{Binding Food}"/>
         <Grid>

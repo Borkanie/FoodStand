@@ -23,17 +23,14 @@ namespace ServiceUnitTests
                 Directory.CreateDirectory(random.ToString());
             }
             _container = new UnityContainer();
-            _container.RegisterType<ISensorReadingService, SensorMockingService>(
-                new ContainerControlledLifetimeManager());
             _container.RegisterType<ILocalizationService, LocalizationService>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(_container));
+                new ContainerControlledLifetimeManager());
             _container.RegisterType<IFoodService, FoodService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] { _container, random.ToString() + "TestFoodService.json" }));
+                new InjectionConstructor(new object[] {random.ToString() + "/TestFoodService.json" }));
             _container.RegisterType<IOrderService, OrderService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] { _container, random.ToString() + "TestOrder.json", random.ToString() + "OrderCache.json" }));
+                new InjectionConstructor(new object[] {random.ToString() + "/TestOrder.json", random.ToString() + "OrderCache.json" }));
         }
 
         public void Dispose()

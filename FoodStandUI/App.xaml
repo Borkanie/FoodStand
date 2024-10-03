@@ -5,6 +5,13 @@
              x:Class="FoodStandUI.App">
     <Application.Resources>
         <ResourceDictionary>
+            <RadialGradientBrush x:Key="PurpleRadialGradientBrush"
+        Center="0.5,0.5" Radius="0.5">
+                <GradientStop Color="#800080" Offset="0.0" />
+                <!-- Dark Purple -->
+                <GradientStop Color="#D8BFD8" Offset="1.0" />
+                <!-- Lighter Purple -->
+            </RadialGradientBrush>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

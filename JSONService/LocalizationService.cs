@@ -15,12 +15,12 @@ namespace JSONService
     /// <inheritdoc/>
     public class LocalizationService : ILocalizationService
     {
-        private FoodMap _foodMap;
-        private UnityContainer _container;
+        private FoodMap? _foodMap;
+        private SensorMockingService sensorMockingService;
 
-        public LocalizationService(UnityContainer serviceContainer)
+        public LocalizationService()
         {
-            _container = serviceContainer;
+            sensorMockingService = new SensorMockingService();
         }
 
         /// <inheritdoc/>
@@ -29,7 +29,7 @@ namespace JSONService
             get{
                 if(_foodMap is null)
                     ResetFoodMap();
-                return _foodMap;
+                return _foodMap!;
             }
         }
 
@@ -39,17 +39,17 @@ namespace JSONService
             if(_foodMap is not null)
             {
                 FoodMap oldMap = _foodMap;
-                _foodMap = _container.Resolve<ISensorReadingService>().getLatestReadings();
-                foreach (var food in _container.Resolve<IFoodService>().GetFoods())
+                _foodMap = sensorMockingService.getLatestReadings();
+                foreach (var container in _foodMap.GetItemList())
                 {
-                    var location = oldMap.AskForLocation(food);
+                    var location = oldMap.AskForLocation(container.Food);
                     foreach (var loc in location)
-                        FoodMap.AddFood(food, loc);
+                        FoodMap.AddFood(container.Food, loc);
                 }
             }
             else
             {
-                _foodMap = _container.Resolve<ISensorReadingService>().getLatestReadings();
+                _foodMap = sensorMockingService.getLatestReadings();
             }           
         }
 
@@ -90,7 +90,7 @@ namespace JSONService
                 for (int column = 0; column < FoodMap.ElementsOnColumn; column++)
                 {
                     var food = oldFoodMap.Get(line, column);
-                    if(food is null)
+                    if(food is not null)
                     {
                         FoodMap.AddFood(food.Food, new Location() { Column = column, Line = line });
                     }
@@ -100,12 +100,12 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Dictionary<Contianer, int> GetFoodChanges()
+        public Dictionary<FoodContainer, int> GetFoodChanges()
         {
             var oldFoodMap = FoodMap; 
             ReadNewQuantitiesAndReapplyMapping(oldFoodMap);
 
-            var foods = new Dictionary<Contianer, int>();
+            var foods = new Dictionary<FoodContainer, int>();
 
             for (int i = 0; i < FoodMap.ElementsOnLine; i++){
                 for(int j=0; j < FoodMap.ElementsOnColumn; j++)
@@ -121,12 +121,12 @@ namespace JSONService
             return foods;
         }
 
-        public List<Contianer> GetItemList()
+        public List<FoodContainer> GetItemList()
         {
-            var list = new List<Contianer>();
+            var list = new List<FoodContainer>();
             foreach(var item in FoodMap.GetItemList())
             {
-                var newItem = new Contianer()
+                var newItem = new FoodContainer(item.Location)
                 {
                     Food = item.Food,
                     Id = item.Id,
@@ -156,6 +156,82 @@ namespace JSONService
         public FoodMap GetFoodMap()
         {
             return FoodMap.Clone();
+        }
+
+        private class SensorMockingService
+        {
+            private FoodMap MakeReading()
+            {
+                var foods = new[]
+                {
+                new Food()
+                {
+                    Name = "Baked Potato",
+                    Description = "Something",
+                    WheigthPerPortion = 1000,
+                    Price = 123
+                },
+                new Food()
+                {
+                    Name = "Raw Chicken",
+                    Description = "Has salmonella",
+                    WheigthPerPortion = 100,
+                    Price = 12
+                },
+                new Food()
+                {
+                    Name = "Pasta",
+                    Description = "Is actually good",
+                    WheigthPerPortion = 1000,
+                    Price = 3
+                },
+                new Food()
+                {
+                    Name = "Spaghetti",
+                    Description = "No sauce",
+                    WheigthPerPortion = 10,
+                    Price = 98
+                },
+            };
+                var lines = 4;
+                var column = 3;
+                var map = new FoodMap(lines, column);
+                var random = new Random();
+                for (int i = 0; i < lines; i++)
+                {
+                    for (int j = 0; j < column; j++)
+                    {
+                        map.Get(i, j).AvailableQuantity = random.Next(500);
+                        var location = new Location(i, j);
+                        map.SetQuantity(random.Next(5000), location);
+                        var foodChoice = ((i + 1) * (j + 1)) % 6;
+                        switch (foodChoice)
+                        {
+                            case 0:
+                                map.AddFood(foods[0], location);
+                                break;
+                            case 1:
+                                map.AddFood(foods[1], location);
+                                break;
+                            case 2:
+                                map.AddFood(foods[2], location);
+                                break;
+                            case 3:
+                                map.AddFood(foods[3], location);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                return map;
+            }
+
+            /// <inheritdoc/>
+            public FoodMap getLatestReadings()
+            {
+                return MakeReading();
+            }
         }
     }
 }

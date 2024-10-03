@@ -24,5 +24,14 @@
             var loc = (Location)obj;
             return loc.Line == Line && loc.Column == Column;    
         }
+
+        /// <summary>
+        /// Hashcode is line power column, both starting from index 1 not zero.
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return (Line+1) ^ (Column+1);
+        }
     }
 }

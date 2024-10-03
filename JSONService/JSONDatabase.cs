@@ -18,12 +18,12 @@ namespace JSONService
 
         public JSONDatabase(string path)
         {
+            filepath = path;
             if(File.Exists(path)) 
             {
                 try
                 {
-                    filepath = path;
-                    Values = JsonConvert.DeserializeObject<List<T>>( File.ReadAllText(path));
+                    Values = JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(path));
                 }
                 catch(Exception ex) 
                 {
@@ -33,9 +33,7 @@ namespace JSONService
             else
             {
                 File.Create(path).Close();
-                filepath = path;
-            }
-            
+            }            
         }
 
         private bool UpdateList()
@@ -52,6 +50,7 @@ namespace JSONService
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
                 return false;
             }
             return true;

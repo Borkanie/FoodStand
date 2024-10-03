@@ -1,25 +1,79 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              x:Class="FoodStandUI.View.FoodMapView"
              xmlns:local="clr-namespace:FoodStandUI.ViewModel.Components"
              xmlns:ui="clr-namespace:FoodStandUI.View.Components">
     <ContentView.BindingContext>
         <local:FoodMapViewModel/>
     </ContentView.BindingContext>
-    <CollectionView ItemsSource="{Binding ItemList}"
-                    Margin="10"
-                    VerticalOptions="Start"
-                    HorizontalOptions="FillAndExpand">
 
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout Orientation="Horizontal" Span="3"/>
-        </CollectionView.ItemsLayout>
+    <ContentView.Resources>
+        <!-- Define DataTemplate for floating containers -->
+        <DataTemplate x:Key="FloatingContainerTemplate">
+            <Grid>
+                <Frame Padding="0" HasShadow="True" CornerRadius="10" Margin="10"
+        HeightRequest="{Binding Heigth, Mode=TwoWay}" WidthRequest="{Binding Width, Mode=TwoWay}">
+                    <Frame.Shadow>
+                        <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.8"/>
+                    </Frame.Shadow>
+                    <!-- The layout of each container -->
+                    <Grid>
+                        <!-- Background image 
+                        <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
+                        <!-- StackPanel for name and description -->
+                        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                                 BackgroundColor="#80000000">
+                            <!-- Name -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Label FontSize="{Binding FontSizeTitle}" Grid.Column="0" Grid.ColumnSpan="6" 
+                                       Grid.Row="0" Grid.RowSpan="3" Text="{Binding Food.Name}" FontAttributes="Bold" 
+                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10"/>
+                                <ImageButton x:Name="SettingsButton" Source="settings.png" Grid.Row="0"
+                                             Grid.Column="5" Background="Transparent" Command="{Binding Path=OnSettingsCLicked}"/>
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <ui:ItemView />
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-        </CollectionView>
+                                <Label Text="Available: "  FontSize="{Binding FontSizeDescription}"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="End"></Label>
+                                <Label Text="{Binding Quantity}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" FontSize="{Binding FontSizeDescription}" HorizontalOptions="Start"/>
+
+                                <!-- Description -->
+                                <Label Text="{Binding Food.Description}" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="{Binding FontSizeDescription}" 
+                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+    </ContentView.Resources>
+
+    <ContentView.Content >
+        <Grid Padding="10">
+            <ScrollView WidthRequest="{Binding Width,Mode=TwoWay}" HeightRequest="{Binding Heigth,Mode=TwoWay}">
+                <!-- ListView or CollectionView to display the floating containers -->
+                <CollectionView ItemsSource="{Binding ItemList}" 
+                    ItemTemplate="{StaticResource FloatingContainerTemplate}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding ElementsOnLine}"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </ScrollView>
+        </Grid>
+    </ContentView.Content>
 </ContentView>

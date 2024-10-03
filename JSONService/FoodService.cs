@@ -18,10 +18,9 @@ namespace JSONService
             };
         }
         JSONDatabase<Food> database;
-        UnityContainer _container;
-        public FoodService(UnityContainer container, string JSONpath = "food.json")
+
+        public FoodService(string JSONpath = "food.json")
         {
-            _container = container;
             database = new JSONDatabase<Food>(JSONpath);
         }
 
@@ -78,6 +77,18 @@ namespace JSONService
         public Food? Get(string name)
         {
             return database.GetElements().FirstOrDefault(x => x.Name == name);
+        }
+
+        /// <inheritdoc/>
+        public bool UpdateName(Food food, string name)
+        {
+            var old = database.GetElements().FirstOrDefault(x => x.Name == food.Name);
+            if(old is not null)
+            {
+                old.Name = name;
+                return (database.Remove(old) && database.Add(old));                
+            }
+            return false;
         }
     }
 }

@@ -52,5 +52,13 @@ namespace Services
         /// <returns> Null if no element has that name in the database.</returns>
         public Food? Get(string name);
 
+        /// <summary>
+        /// Updates the name of a food.
+        /// </summary>
+        /// <param name="food"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool UpdateName(Food food, string name);
+
     }
 }

@@ -26,7 +26,7 @@ namespace Services
         /// If th dictionary is null that means no food was picked up.
         /// </summary>
         /// <returns>A dicitonary of all the foods and the change in mass.</returns>
-        public Dictionary<Contianer, int> GetFoodChanges();
+        public Dictionary<FoodContainer, int> GetFoodChanges();
 
         /// <summary>
         /// Return the current populated <see cref="FoodMap"/>
@@ -38,7 +38,7 @@ namespace Services
         /// Returns a list of all populated Items.
         /// </summary>
         /// <returns></returns>
-        public List<Contianer> GetItemList();
+        public List<FoodContainer> GetItemList();
 
         /// <summary>
         /// Returns the size of the current <see cref="FoodMap"/>

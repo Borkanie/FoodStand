@@ -1,4 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
+using Windows.Graphics.Display;
+using Windows.UI.ViewManagement;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -17,6 +19,12 @@ namespace FoodStandUI.WinUI
         public App()
         {
             this.InitializeComponent();
+        }
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.Landscape;
+            base.OnLaunched(e);
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

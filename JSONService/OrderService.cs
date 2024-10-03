@@ -12,12 +12,10 @@ namespace JSONService
 {
     public class OrderService : IOrderService
     {
-        UnityContainer _container;
         JSONDatabase<Order> _confirmedOrders;
         JSONDatabase<Order> _activeOrders;
-        public OrderService(UnityContainer container, string path = "_confirmedOrders.json", string tempCach = "orderCache.json")
+        public OrderService(string path = "_confirmedOrders.json", string tempCach = "orderCache.json")
         {
-            _container = container;
             _confirmedOrders = new JSONDatabase<Order>(path);
             _activeOrders = new JSONDatabase<Order>(tempCach);
         }
@@ -52,7 +50,7 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Item CreateItem(Contianer source)
+        public Item CreateItem(FoodContainer source)
         {
             return new Item(source.Food);
         }
@@ -88,7 +86,7 @@ namespace JSONService
         }
 
         /// <inheritdoc/>
-        public Order? StartNewOrder()
+        public Order StartNewOrder()
         {
             var order = new Order();
             if (_activeOrders.Add(order))
@@ -98,7 +96,10 @@ namespace JSONService
                     Id = order.Id,
                 };
             }
-            return null;
+            else
+            {
+                throw new Exception("Order cannot bee started.");
+            }
         }
 
         /// <inheritdoc/>
@@ -128,11 +129,11 @@ namespace JSONService
 
         public Order? GetOrder(Guid id)
         {
-            if(_activeOrders.GetElements().FirstOrDefault(_x => _x.Id == id) != null)
+            if(_activeOrders.GetElements().FirstOrDefault(_x => _x.Id == id) is not null)
             {
                 return _activeOrders.GetElements().First(x => x.Id == id);  
             }
-            if(_confirmedOrders.GetElements().FirstOrDefault(_x => _x.Id == id) != null)
+            if(_confirmedOrders.GetElements().FirstOrDefault(_x => _x.Id == id) is not null)
             {
                 return _confirmedOrders.GetElements().First(x => x.Id == id);
             }
