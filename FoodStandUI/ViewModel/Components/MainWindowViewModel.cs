@@ -3,6 +3,7 @@ using FoodStandUI.ViewModel.Basic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,23 @@ namespace FoodStandUI.ViewModel.Components
             foreach(var food in BackendAPI.FoodService.GetFoods())
             {
                 FoodViewModels.Add(new FoodViewModel(food));
+            }
+            // Initial image
+            FoodListButtonImageSource = ImageSource.FromFile("Resources\\Images\\food.jpg");
+        }
+
+        private ImageSource _foodListButtonImageSource;
+
+        public ImageSource FoodListButtonImageSource
+        {
+            get => _foodListButtonImageSource;
+            set
+            {
+                if (_foodListButtonImageSource != value)
+                {
+                    _foodListButtonImageSource = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 

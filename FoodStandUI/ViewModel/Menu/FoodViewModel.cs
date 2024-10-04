@@ -12,8 +12,29 @@ namespace FoodStandUI.ViewModel
         private FoodViewModel()
         {
             ExpandToggleButtonClick = new Command(expandToggleButtonClick);
+            // Initial image
+            plus = ImageSource.FromFile("Resources\\Images\\minus.jpg");
+            // Initial image
+            minus = ImageSource.FromFile("Resources\\Images\\plus.jpg");
+            ToggleButtonImage = plus;
         }
 
+        private ImageSource plus;
+        private ImageSource minus;
+        private ImageSource toggleButtonImage;
+
+        public ImageSource ToggleButtonImage
+        {
+            get => toggleButtonImage;
+            set
+            {
+                if (toggleButtonImage != value)
+                {
+                    toggleButtonImage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
         internal bool DetailsVisible
         {
             get => detailsVisible;
@@ -43,6 +64,14 @@ namespace FoodStandUI.ViewModel
         private void expandToggleButtonClick()
         {
             DetailsVisible = !DetailsVisible;
+            if (DetailsVisible)
+            {
+                ToggleButtonImage = minus;
+            }
+            else
+            {
+                ToggleButtonImage = plus;
+            }
         }
 
         internal ICommand ExpandToggleButtonClick { get; private set; } 

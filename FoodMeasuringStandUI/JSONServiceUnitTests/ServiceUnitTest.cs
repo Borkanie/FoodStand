@@ -27,10 +27,10 @@ namespace ServiceUnitTests
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IFoodService, FoodService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] {random.ToString() + "/TestFoodService.json" }));
+                new InjectionConstructor(new object[] {random.ToString() + "\\TestFoodService.json" }));
             _container.RegisterType<IOrderService, OrderService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] {random.ToString() + "/TestOrder.json", random.ToString() + "OrderCache.json" }));
+                new InjectionConstructor(new object[] {random.ToString() + "\\TestOrder.json", random.ToString() + "\\OrderCache.json" }));
         }
 
         public void Dispose()

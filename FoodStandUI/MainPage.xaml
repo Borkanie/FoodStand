@@ -5,28 +5,34 @@
              xmlns:views="clr-namespace:FoodStandUI.View.Mapping"
              xmlns:dailogs="clr-namespace:FoodStandUI.View.Dialog"
              x:Name="MainView">
-    <ContentPage.Background>
-        <!-- Reuse the PurpleRadialGradientBrush defined in App.xaml -->
-        <StaticResource Key="PurpleRadialGradientBrush" />
-    </ContentPage.Background>
-    
-    <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill"
+          Padding="0" Margin="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <VerticalStackLayout>
             <ImageButton Grid.Column="0" WidthRequest="50" HeightRequest="50"
+                         Source="{Binding FoodListButtonImageSource}"
                          x:Name="FoodListButton" Clicked="FoodListButton_Clicked"/>
 
         </VerticalStackLayout>
 
-        <views:FoodMappingView Grid.Column="1" BindingContext="{Binding FoodMap}"
-                           WidthRequest="{Binding Width, Mode=TwoWay}" HeightRequest="{Binding Heigth, Mode=TwoWay}"/>
+        <Grid Grid.Column="1"  HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Grid.Background>
+                <!-- Reuse the PurpleRadialGradientBrush defined in App.xaml -->
+                <StaticResource Key="PurpleRadialGradientBrush" />
+            </Grid.Background>
+            <views:FoodMappingView  HorizontalOptions="Fill" VerticalOptions="Fill"
+                BindingContext="{Binding FoodMap}"/>
+        </Grid>
         
         <!-- The Overlay that will show the dark haze and settings view -->
-        <Grid x:Name="Overlay" Grid.ColumnSpan="2" Grid.Column="0" BackgroundColor="Black" Opacity="0.8" IsVisible="False">
+        <Grid x:Name="Overlay" Grid.ColumnSpan="2" Grid.Column="0"
+               HorizontalOptions="Fill" VerticalOptions="Fill"
+                Padding="0" Margin="0"
+              BackgroundColor="Black" Opacity="0.8" IsVisible="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -41,7 +47,8 @@
 
 
             <!-- The Container Settings View -->
-            <ContentView BackgroundColor="White" Grid.Row="1" Grid.Column="1">
+            <ContentView BackgroundColor="White" Grid.Row="1" Grid.Column="1"
+                         HorizontalOptions="Center" VerticalOptions="Center">
                 <!-- Example of settings content -->
                 <StackLayout>
                     <dailogs:ContianerSettingsView x:Name="ContainerSettingsView"/>

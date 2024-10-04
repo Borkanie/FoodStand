@@ -33,37 +33,6 @@ namespace FoodStandUI.ViewModel.Components
             get => model.ElementsOnLine;
         }
 
-        public override double Heigth
-        {
-            get => base.Heigth;
-            set
-            {
-                if (base.Heigth != value)
-                {
-                    base.Heigth = value;
-                    foreach (var item in ItemList)
-                    {
-                        item.Heigth = value / model.ElementsOnColumn;
-                    }
-                }
-            }
-        }
-
-        public override double Width
-        {
-            get => base.Width;
-            set
-            {
-                if (base.Width != value)
-                {
-                    base.Width = value;
-                    foreach(var item in ItemList)
-                    {
-                        item.Width = value/model.ElementsOnLine;
-                    }
-                }
-            }
-        }
 
         public FoodMap Model
         {

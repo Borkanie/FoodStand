@@ -44,7 +44,7 @@
                                         <ImageButton x:Name="descriptionToggleButton"
                                                      Grid.Column="1"
                                                      Background="Transparent"
-                                                     Source="{Binding ImageSource}"
+                                                     Source="{Binding ToggleButtonImage}"
                                                      Command="{Binding ExpandToggleButtonClick}"
                                                      WidthRequest="50">
                                         </ImageButton>

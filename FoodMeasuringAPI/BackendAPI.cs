@@ -21,7 +21,7 @@ namespace FoodMeasuringAPI
     {
         private UnityContainer _container;
         private static BackendAPI? instance;
-        
+        private static string dataBasePath = "D:\\Development\\DBB\\";
         private BackendAPI() 
         {
             _container = new UnityContainer();
@@ -29,10 +29,10 @@ namespace FoodMeasuringAPI
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IFoodService, FoodService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] { "debugFood.json"}));
+                new InjectionConstructor(new object[] { dataBasePath + "debugFood.json" }));
             _container.RegisterType<IOrderService, OrderService>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new object[] {"debugActive.json", "debugCache.json" }));
+                new InjectionConstructor(new object[] { dataBasePath + "debugActive.json", dataBasePath + "debugCache.json" }));
         }
 
         public UnityContainer Container
