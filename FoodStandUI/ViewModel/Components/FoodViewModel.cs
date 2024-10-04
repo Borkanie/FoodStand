@@ -1,21 +1,12 @@
 ﻿using FoodMeasuringAPI;
 using FoodMeasuringObjects.Foods;
 using FoodStandUI.ViewModel.Basic;
-using FoodMeasuringObjects.Telemetry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity;
-using Services;
-using System.Windows.Input;
 
-namespace FoodStandUI.ViewModel.Components
+namespace FoodStandUI.ViewModel
 {
-    internal class FoodViewModel :  BaseViewModel
+    internal partial class FoodViewModel :  BaseViewModel
     {
-        Food model;
+        private Food model;
         private string name;
 
         public FoodViewModel(Food model)
@@ -26,7 +17,7 @@ namespace FoodStandUI.ViewModel.Components
 
         public bool AddToLocation(FoodMeasuringObjects.Telemetry.Location location)
         {
-            return BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(model, location);
+            return BackendAPI.LocalizationService.AddFood(model, location);
         }
         
         public bool UpdateModel()

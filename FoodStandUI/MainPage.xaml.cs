@@ -16,15 +16,15 @@ namespace FoodStandUI
             Loaded += OnLoaded;
             SizeChanged += MainPage_SizeChanged;
             WeakReferenceMessenger.Default.Register<MainPage, ContainerViewModelMessage>(this, static (r, msg) => r.ReadMessageFromContainerVM(msg));
-            WeakReferenceMessenger.Default.Register<MainPage, ContainerSettingsViewMessage>(this, static (r, msg) => r.ReadMessageFromContainerSettingsView(msg));
+            WeakReferenceMessenger.Default.Register<MainPage, ContainerMessage>(this, static (r, msg) => r.ReadMessageFromContainerSettingsView(msg));
             //WeakReferenceMessenger.Default.Register<ContainerViewModel>(this, MessageType.ContainerSettingsButtonClicked.Value, x => CreateContainerSettingsView(x));
         }
 
-        private void ReadMessageFromContainerSettingsView(ContainerSettingsViewMessage message)
+        private void ReadMessageFromContainerSettingsView(ContainerMessage message)
         {
             switch (message.Type)
             {
-                case ContainerSettingsViewMessage.Action.CancelSettings:
+                case ContainerMessage.Action.CancelSettings:
                     Overlay.IsVisible = false;
                     break;
                 default:
@@ -60,6 +60,11 @@ namespace FoodStandUI
             VM.Width = Width;
             VM.Heigth = Height;
             BindingContext = VM;
+        }
+
+        private void FoodListButton_Clicked(object sender, EventArgs e)
+        {
+            VM.CurrentOverlay = MainWindowViewModel.Overlays.FoodList;
         }
     }
 

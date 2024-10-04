@@ -1,4 +1,4 @@
-﻿using FoodStandUI.View.Dialog;
+﻿using FoodStandUI.View.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace FoodStandUI.Resources.Messages
 {
-    internal class ContainerSettingsViewMessage
+    class FoodMessage
     {
-        public ContainerSettingsViewMessage(ContianerSettingsView view, Action action)
+        public FoodMessage(FoodListView view, Action action)
         {
             Type = action;
             View = view;
         }
 
-        public ContianerSettingsView View { get; }
+        public FoodListView View { get; }
 
         public Action Type { get; }
 

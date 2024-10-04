@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             x:Class="FoodStandUI.View.FoodMapView"
+             x:Class="FoodStandUI.View.Mapping.FoodMappingView"
              xmlns:local="clr-namespace:FoodStandUI.ViewModel.Components"
              xmlns:ui="clr-namespace:FoodStandUI.View.Components">
     <ContentView.BindingContext>
@@ -14,17 +13,17 @@
         <DataTemplate x:Key="FloatingContainerTemplate">
             <Grid>
                 <Frame Padding="0" HasShadow="True" CornerRadius="10" Margin="10"
-        HeightRequest="{Binding Heigth, Mode=TwoWay}" WidthRequest="{Binding Width, Mode=TwoWay}">
+    HeightRequest="{Binding Heigth, Mode=TwoWay}" WidthRequest="{Binding Width, Mode=TwoWay}">
                     <Frame.Shadow>
                         <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.8"/>
                     </Frame.Shadow>
                     <!-- The layout of each container -->
                     <Grid>
                         <!-- Background image 
-                        <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
+                    <Image Source="{Binding BackgroundImage}" Aspect="AspectFill"/>-->
                         <!-- StackPanel for name and description -->
                         <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
-                                 BackgroundColor="#80000000">
+                             BackgroundColor="#80000000">
                             <!-- Name -->
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -44,17 +43,17 @@
                                     <RowDefinition Height="1*"/>
                                 </Grid.RowDefinitions>
                                 <Label FontSize="{Binding FontSizeTitle}" Grid.Column="0" Grid.ColumnSpan="6" 
-                                       Grid.Row="0" Grid.RowSpan="3" Text="{Binding Food.Name}" FontAttributes="Bold" 
-                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10"/>
+                                   Grid.Row="0" Grid.RowSpan="3" Text="{Binding Food.Name}" FontAttributes="Bold" 
+                                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10"/>
                                 <ImageButton x:Name="SettingsButton" Source="settings.png" Grid.Row="0"
-                                             Grid.Column="5" Background="Transparent" Command="{Binding Path=OnSettingsCLicked}"/>
+                                         Grid.Column="5" Background="Transparent" Command="{Binding Path=OnSettingsCLicked}"/>
 
                                 <Label Text="Available: "  FontSize="{Binding FontSizeDescription}"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="End"></Label>
                                 <Label Text="{Binding Quantity}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" FontSize="{Binding FontSizeDescription}" HorizontalOptions="Start"/>
 
                                 <!-- Description -->
                                 <Label Text="{Binding Food.Description}" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="{Binding FontSizeDescription}" 
-                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Grid>
                         </StackLayout>
                     </Grid>
@@ -68,7 +67,7 @@
             <ScrollView WidthRequest="{Binding Width,Mode=TwoWay}" HeightRequest="{Binding Heigth,Mode=TwoWay}">
                 <!-- ListView or CollectionView to display the floating containers -->
                 <CollectionView ItemsSource="{Binding ItemList}" 
-                    ItemTemplate="{StaticResource FloatingContainerTemplate}">
+                ItemTemplate="{StaticResource FloatingContainerTemplate}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="{Binding ElementsOnLine}"/>
                     </CollectionView.ItemsLayout>

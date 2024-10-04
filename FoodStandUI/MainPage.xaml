@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodStandUI.MainPage"
-             xmlns:views="clr-namespace:FoodStandUI.View"
+             xmlns:views="clr-namespace:FoodStandUI.View.Mapping"
              xmlns:dailogs="clr-namespace:FoodStandUI.View.Dialog"
              x:Name="MainView">
     <ContentPage.Background>
@@ -10,12 +10,23 @@
         <StaticResource Key="PurpleRadialGradientBrush" />
     </ContentPage.Background>
     
-    <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"> 
-        <views:FoodMapView BindingContext="{Binding FoodMap}"
+    <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <VerticalStackLayout>
+            <ImageButton Grid.Column="0" WidthRequest="50" HeightRequest="50"
+                         x:Name="FoodListButton" Clicked="FoodListButton_Clicked"/>
+
+        </VerticalStackLayout>
+
+        <views:FoodMappingView Grid.Column="1" BindingContext="{Binding FoodMap}"
                            WidthRequest="{Binding Width, Mode=TwoWay}" HeightRequest="{Binding Heigth, Mode=TwoWay}"/>
         
         <!-- The Overlay that will show the dark haze and settings view -->
-        <Grid x:Name="Overlay" BackgroundColor="Black" Opacity="0.8" IsVisible="False">
+        <Grid x:Name="Overlay" Grid.ColumnSpan="2" Grid.Column="0" BackgroundColor="Black" Opacity="0.8" IsVisible="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />

@@ -64,9 +64,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="9.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
@@ -78,9 +80,6 @@
 	<ItemGroup>
 	  <Compile Update="View\Components\FoodListitemView.xaml.cs">
 	    <DependentUpon>FoodListitemView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="View\OrderManagementView.xaml.cs">
-	    <DependentUpon>OrderManagementView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -97,10 +96,10 @@
 	  <MauiXaml Update="View\Dialog\ContianerSettingsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\FoodMapView.xaml">
+	  <MauiXaml Update="View\Mapping\FoodMappingView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\OrderManagementView.xaml">
+	  <MauiXaml Update="View\Menu\FoodListView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

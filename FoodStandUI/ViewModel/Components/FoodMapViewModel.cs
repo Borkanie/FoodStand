@@ -18,9 +18,10 @@ namespace FoodStandUI.ViewModel.Components
     internal class FoodMapViewModel : BaseViewModel
     {
         private FoodMap model;
+
         public FoodMapViewModel()
         {
-            model = BackendAPI.Instance.Container.Resolve<ILocalizationService>().GetFoodMap();
+            model = BackendAPI.LocalizationService.GetFoodMap();
             foreach(var item in model.GetItemList())
             {
                 ItemList.Add(new ContainerViewModel(item));
@@ -68,7 +69,7 @@ namespace FoodStandUI.ViewModel.Components
         {
             get
             {
-                var changes = BackendAPI.Instance.Container.Resolve<ILocalizationService>().GetFoodChanges();
+                var changes = BackendAPI.LocalizationService.GetFoodChanges();
                 if(changes.Keys.Count != 0)
                 {
                     var items = model.GetItemList();
@@ -104,7 +105,7 @@ namespace FoodStandUI.ViewModel.Components
 
         public void SetItem(Food food, FoodMeasuringObjects.Telemetry.Location location)
         {
-            BackendAPI.Instance.Container.Resolve<ILocalizationService>().AddFood(food, location);
+            BackendAPI.LocalizationService.AddFood(food, location);
         }
 
     }

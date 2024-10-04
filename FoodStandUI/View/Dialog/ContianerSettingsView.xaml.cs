@@ -19,11 +19,6 @@ public partial class ContianerSettingsView : ContentView
 		FoodSettings.BindingContext = vm.Food;
 	}
 
-	internal void CancelButton_Clicked(object sender, EventArgs e)
-	{
-        WeakReferenceMessenger.Default.Send(new ContainerSettingsViewMessage(this, ContainerSettingsViewMessage.Action.CancelSettings));
-	}
-
 	private bool ParseInputs(ContainerViewModel vm)
 	{
 		int wheigth = 0;
@@ -46,6 +41,11 @@ public partial class ContianerSettingsView : ContentView
 		return false;
 	}
 
+	internal void CancelButton_Clicked(object sender, EventArgs e)
+	{
+        WeakReferenceMessenger.Default.Send(new ContainerMessage(this, ContainerMessage.Action.CancelSettings));
+	}
+
     internal void SaveButton_Clicked(object sender, EventArgs e)
     {
 		if(BindingContext is not null)
@@ -53,7 +53,7 @@ public partial class ContianerSettingsView : ContentView
 			var vm = ((ContainerViewModel)BindingContext);
             if (ParseInputs(vm) && vm.UpdateModel())
 			{
-                WeakReferenceMessenger.Default.Send(new ContainerSettingsViewMessage(this, ContainerSettingsViewMessage.Action.CancelSettings));
+                WeakReferenceMessenger.Default.Send(new ContainerMessage(this, ContainerMessage.Action.CancelSettings));
             }
             else
 			{

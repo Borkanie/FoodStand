@@ -1,4 +1,5 @@
-﻿using FoodStandUI.Services;
+﻿using CommunityToolkit.Maui;
+using FoodStandUI.Services;
 using Microsoft.Extensions.Logging;
 
 namespace FoodStandUI
@@ -11,6 +12,8 @@ namespace FoodStandUI
             builder.Services.AddSingleton<IAlertService, AlertService>();
             builder
                 .UseMauiApp<App>()
+                // Initialize the .NET MAUI Community Toolkit by adding the below line of code
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
